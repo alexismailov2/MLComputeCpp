@@ -69,33 +69,33 @@ enum class eMLCExecutionOptions : uint64_t {
  *  @abstract   The list of supported arithmetic operations.
  */
 enum class eMLCArithmeticOperation : int32_t {
-MLCArithmeticOperationAdd      = 0,
-MLCArithmeticOperationSubtract = 1,
-MLCArithmeticOperationMultiply = 2,
-MLCArithmeticOperationDivide   = 3,
-MLCArithmeticOperationFloor    = 4,
-MLCArithmeticOperationRound    = 5,
-MLCArithmeticOperationCeil     = 6,
-MLCArithmeticOperationSqrt     = 7,
-MLCArithmeticOperationRsqrt    = 8,
-MLCArithmeticOperationSin      = 9,
-MLCArithmeticOperationCos      = 10,
-MLCArithmeticOperationTan      = 11,
-MLCArithmeticOperationAsin     = 12,
-MLCArithmeticOperationAcos     = 13,
-MLCArithmeticOperationAtan     = 14,
-MLCArithmeticOperationSinh     = 15,
-MLCArithmeticOperationCosh     = 16,
-MLCArithmeticOperationTanh     = 17,
-MLCArithmeticOperationAsinh    = 18,
-MLCArithmeticOperationAcosh    = 19,
-MLCArithmeticOperationAtanh    = 20,
-MLCArithmeticOperationPow      = 21,
-MLCArithmeticOperationExp      = 22,
-MLCArithmeticOperationExp2     = 23,
-MLCArithmeticOperationLog      = 24,
-MLCArithmeticOperationLog2     = 25,
-MLCArithmeticOperationCount,
+    Add,
+    Subtract,
+    Multiply,
+    Divide,
+    Floor,
+    Round,
+    Ceil,
+    Sqrt,
+    Rsqrt,
+    Sin,
+    Cos,
+    Tan,
+    Asin,
+    Acos,
+    Atan,
+    Sinh,
+    Cosh,
+    Tanh,
+    Asinh,
+    Acosh,
+    Atanh,
+    Pow,
+    Exp,
+    Exp2,
+    Log,
+    Log2,
+    Count
 };
 
 /*!
@@ -103,16 +103,16 @@ MLCArithmeticOperationCount,
  *  @abstract   A loss function.
  */
 enum class eMLCLossType : int32_t {
-MLCLossTypeMeanAbsoluteError       = 0,
-MLCLossTypeMeanSquaredError        = 1,
-MLCLossTypeSoftmaxCrossEntropy     = 2,
-MLCLossTypeSigmoidCrossEntropy     = 3,
-MLCLossTypeCategoricalCrossEntropy = 4,
-MLCLossTypeHinge                   = 5,
-MLCLossTypeHuber                   = 6,
-MLCLossTypeCosineDistance          = 7,
-MLCLossTypeLog                     = 8,
-MLCLossTypeCount
+    MeanAbsoluteError,
+    MeanSquaredError,
+    SoftmaxCrossEntropy,
+    SigmoidCrossEntropy,
+    CategoricalCrossEntropy,
+    Hinge,
+    Huber,
+    CosineDistance,
+    Log,
+    Count
 };
 
 /*!
@@ -120,26 +120,26 @@ MLCLossTypeCount
  * @abstract   An activation type that you specify for an activation descriptor.
  */
 enum class eMLCActivationType : int32_t {
-MLCActivationTypeNone                                               = 0,
-MLCActivationTypeReLU                                               = 1,
-MLCActivationTypeLinear                                             = 2,
-MLCActivationTypeSigmoid                                            = 3,
-MLCActivationTypeHardSigmoid                                        = 4,
-MLCActivationTypeTanh                                               = 5,
-MLCActivationTypeAbsolute                                           = 6,
-MLCActivationTypeSoftPlus                                           = 7,
-MLCActivationTypeSoftSign                                           = 8,
-MLCActivationTypeELU                                                = 9,
-MLCActivationTypeReLUN                                              = 10,
-MLCActivationTypeLogSigmoid                                         = 11,
-MLCActivationTypeSELU                                               = 12,
-MLCActivationTypeCELU                                               = 13,
-MLCActivationTypeHardShrink                                         = 14,
-MLCActivationTypeSoftShrink                                         = 15,
-MLCActivationTypeTanhShrink                                         = 16,
-MLCActivationTypeThreshold                                          = 17,
-MLCActivationTypeGELU                                               = 18,
-MLCActivationTypeCount
+    None,
+    ReLU,
+    Linear,
+    Sigmoid,
+    HardSigmoid,
+    Tanh,
+    Absolute,
+    SoftPlus,
+    SoftSign,
+    ELU,
+    ReLUN,
+    LogSigmoid,
+    SELU,
+    CELU,
+    HardShrink,
+    SoftShrink,
+    TanhShrink,
+    Threshold,
+    GELU,
+    Count
 };
 
 /*!
@@ -147,9 +147,9 @@ MLCActivationTypeCount
  * @abstract   A convolution type that you specify for a convolution descriptor.
  */
 enum class eMLCConvolutionType : int32_t {
-MLCConvolutionTypeStandard   = 0,
-MLCConvolutionTypeTransposed = 1,
-MLCConvolutionTypeDepthwise  = 2,
+    Standard,
+    Transposed,
+    Depthwise
 };
 
 /*!
@@ -157,9 +157,9 @@ MLCConvolutionTypeDepthwise  = 2,
  * @abstract   A padding policy that you specify for a convolution or pooling layer.
  */
 enum class eMLCPaddingPolicy : int32_t {
-MLCPaddingPolicySame           = 0,
-MLCPaddingPolicyValid          = 1,
-MLCPaddingPolicyUsePaddingSize = 2,
+    Same,
+    Valid,
+    UsePaddingSize
 };
 
 /*!
@@ -167,10 +167,10 @@ MLCPaddingPolicyUsePaddingSize = 2,
  *  @abstract   A padding type that you specify for a padding layer.
  */
 enum class eMLCPaddingType : int32_t {
-MLCPaddingTypeZero      = 0,
-MLCPaddingTypeReflect   = 1,
-MLCPaddingTypeSymmetric = 2,
-MLCPaddingTypeConstant  = 3,
+    Zero,
+    Reflect,
+    Symmetric,
+    Constant
 };
 
 /*!
@@ -178,10 +178,10 @@ MLCPaddingTypeConstant  = 3,
  *  @abstract   A pooling function type for a pooling layer.
  */
 enum class eMLCPoolingType : int32_t {
-MLCPoolingTypeMax     = 1,
-MLCPoolingTypeAverage = 2,
-MLCPoolingTypeL2Norm  = 3,
-MLCPoolingTypeCount
+    Max = 1,
+    Average,
+    L2Norm,
+    Count
 };
 
 /*!
@@ -189,14 +189,14 @@ MLCPoolingTypeCount
  *  @abstract   A reduction operation type.
  */
 enum class eMLCReductionType : int32_t {
-MLCReductionTypeNone                 = 0,
-MLCReductionTypeSum                  = 1,
-MLCReductionTypeMean                 = 2,
-MLCReductionTypeMax                  = 3,
-MLCReductionTypeMin                  = 4,
-MLCReductionTypeArgMax               = 5,
-MLCReductionTypeArgMin               = 6,
-MLCReductionTypeCount
+    None,
+    Sum,
+    Mean,
+    Max,
+    Min,
+    ArgMax,
+    ArgMin,
+    Count
 };
 
 /*!
@@ -204,9 +204,9 @@ MLCReductionTypeCount
  *  @abstract
  */
 enum class eMLCRegularizationType : int32_t {
-MLCRegularizationTypeNone                   = 0,
-MLCRegularizationTypeL1                     = 1,
-MLCRegularizationTypeL2                     = 2,
+    None,
+    L1,
+    L2
 };
 
 /*!
@@ -214,8 +214,8 @@ MLCRegularizationTypeL2                     = 2,
  *  @abstract   A sampling mode for an upsample layer.
  */
 enum class eMLCSampleMode : int32_t {
-MLCSampleModeNearest = 0,
-MLCSampleModeLinear  = 1,
+    Nearest,
+    Linear
 };
 
 /*!
@@ -223,8 +223,8 @@ MLCSampleModeLinear  = 1,
  *  @abstract   A softmax operation.
  */
 enum class eMLCSoftmaxOperation : int32_t {
-MLCSoftmaxOperationSoftmax    = 0,
-MLCSoftmaxOperationLogSoftmax = 1,
+    Softmax,
+    LogSoftmax
 };
 
 /*!
@@ -232,8 +232,8 @@ MLCSoftmaxOperationLogSoftmax = 1,
  * @abstract   A result mode for an LSTM layer.
  */
 enum class eMLCLSTMResultMode : uint64_t {
-MLCLSTMResultModeOutput = 0,
-MLCLSTMResultModeOutputAndStates = 1,
+    Output,
+    OutputAndStates,
 };
 
 //NSString *MLCActivationTypeDebugDescription(MLCActivationType activationType)

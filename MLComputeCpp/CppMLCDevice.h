@@ -4,6 +4,7 @@
 #import "CppMLCTypes.h"
 
 class CppMLCTensor;
+class CppMLCLayer;
 
 class CppMLCDevice {
 private:
@@ -55,5 +56,6 @@ public:
 private:
     void* self;
     friend CppMLCTensor;
+    friend CppMLCLayer;
 };
 #endif

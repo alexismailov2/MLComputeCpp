@@ -1,40 +1,7 @@
 #import "CppMLCTensorDescriptor.h"
+#import "CppMLCTypesPrivate.h"
 
 #import <MLCompute/MLCTensorDescriptor.h>
-
-namespace {
-   auto toNSArray(std::vector<uint32_t> const& vector) -> NSArray<NSNumber*>* {
-       id ns = [NSMutableArray new];
-       std::for_each(vector.begin(), vector.end(), ^(uint32_t item) {
-           [ns addObject:[NSNumber numberWithInteger:(NSInteger)item]];
-       });
-       return ns;
-   }
-
-   auto toNative(eMLCDataType dataType) -> MLCDataType {
-       switch(dataType) {
-           case eMLCDataType::Invalid: return MLCDataTypeInvalid;
-           case eMLCDataType::Float32: return MLCDataTypeFloat32;
-           case eMLCDataType::Boolean: return MLCDataTypeBoolean;
-           case eMLCDataType::Int64: return MLCDataTypeInt64;
-           case eMLCDataType::Int32: return MLCDataTypeInt32;
-           case eMLCDataType::Count: return MLCDataTypeCount;
-           default: return MLCDataTypeInvalid;
-       }
-   }
-
-    auto MLCDataTypeToCpp(MLCDataType dataType) -> eMLCDataType {
-        switch(dataType) {
-            case MLCDataTypeInvalid: return eMLCDataType::Invalid;
-            case MLCDataTypeFloat32: return eMLCDataType::Float32;
-            case MLCDataTypeBoolean: return eMLCDataType::Boolean;
-            case MLCDataTypeInt64: return eMLCDataType::Int64;
-            case MLCDataTypeInt32: return eMLCDataType::Int32;
-            case MLCDataTypeCount: return eMLCDataType::Count;
-            default: return eMLCDataType::Invalid;
-        }
-    }
-}
 
 //auto
 //CppMLCTensorDescriptor::ConvolutionWeightsDescriptor(uint32_t width,

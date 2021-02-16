@@ -1,28 +1,9 @@
 #import "CppMLCDevice.h"
 
+#import "CppMLCTypes.h"
+#import "CppMLCTypesPrivate.h"
+
 #import <MLCompute/MLCDevice.h>
-
-namespace {
-    auto toNative(eMLCDeviceType deviceType) -> MLCDeviceType {
-        switch(deviceType) {
-            case eMLCDeviceType::CPU: return MLCDeviceTypeCPU;
-            case eMLCDeviceType::GPU: return MLCDeviceTypeGPU;
-            case eMLCDeviceType::Any: return MLCDeviceTypeAny;
-            case eMLCDeviceType::Count: return MLCDeviceTypeCount;
-            default: return MLCDeviceTypeAny;
-        }
-    }
-
-    auto MLCDeviceTypeToCpp(MLCDeviceType deviceType) -> eMLCDeviceType {
-        switch(deviceType) {
-            case MLCDeviceTypeCPU: return eMLCDeviceType::CPU;
-            case MLCDeviceTypeGPU: return eMLCDeviceType::GPU;
-            case MLCDeviceTypeAny: return eMLCDeviceType::Any;
-            case MLCDeviceTypeCount: return eMLCDeviceType::Count;
-            default: return eMLCDeviceType::Any;
-        }
-    }
-}
 
 CppMLCDevice::CppMLCDevice(void *mlcDevice)
     : self{mlcDevice}

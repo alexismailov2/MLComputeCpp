@@ -1,41 +1,9 @@
 #import "CppMLCTensor.h"
 #import "CppMLCTensorDescriptor.h"
 #import "CppMLCTensorData.h"
+#import "CppMLCTypesPrivate.h"
 
 #import <MLCompute/MLCTensor.h>
-
-namespace {
-    auto toNSArray(std::vector<uint32_t> const& vector) -> NSArray<NSNumber*>* {
-        id ns = [NSMutableArray new];
-        std::for_each(vector.begin(), vector.end(), ^(uint32_t item) {
-            [ns addObject:[NSNumber numberWithInteger:(NSInteger)item]];
-        });
-        return ns;
-    }
-
-    auto toNative(eMLCRandomInitializerType randomInitializerType) -> MLCRandomInitializerType {
-        switch (randomInitializerType) {
-            case eMLCRandomInitializerType::Invalid: return MLCRandomInitializerTypeInvalid;
-            case eMLCRandomInitializerType::Uniform: return MLCRandomInitializerTypeUniform;
-            case eMLCRandomInitializerType::GlorotUniform: return MLCRandomInitializerTypeGlorotUniform;
-            case eMLCRandomInitializerType::Xavier: return MLCRandomInitializerTypeXavier;
-            case eMLCRandomInitializerType::Count: return MLCRandomInitializerTypeCount;
-            default: return MLCRandomInitializerTypeInvalid;
-        }
-    }
-
-    auto toNative(eMLCDataType dataType) -> MLCDataType {
-        switch(dataType) {
-            case eMLCDataType::Invalid: return MLCDataTypeInvalid;
-            case eMLCDataType::Float32: return MLCDataTypeFloat32;
-            case eMLCDataType::Boolean: return MLCDataTypeBoolean;
-            case eMLCDataType::Int64: return MLCDataTypeInt64;
-            case eMLCDataType::Int32: return MLCDataTypeInt32;
-            case eMLCDataType::Count: return MLCDataTypeCount;
-            default: return MLCDataTypeInvalid;
-        }
-    }
-} // end namespace anonymous
 
 CppMLCTensor::CppMLCTensor()
     : self(NULL)

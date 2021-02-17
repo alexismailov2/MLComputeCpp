@@ -5,16 +5,6 @@
 
 #import <MLCompute/MLCTensor.h>
 
-CppMLCTensor::CppMLCTensor()
-    : self(NULL)
-{
-}
-
-CppMLCTensor::~CppMLCTensor()
-{
-    [(id)self dealloc];
-}
-
 auto CppMLCTensor::getTensorId() -> uint64_t
 {
     return (uint64_t)((MLCTensor*)self).tensorID;
@@ -164,4 +154,9 @@ bool CppMLCTensor::bindAndWriteData(CppMLCTensorData const& data, CppMLCDevice c
 {
     return [(MLCTensor*)self bindAndWriteData:(MLCTensorData*)data.self
                                        toDevice:(MLCDevice*)toDevice.self] == YES;
+}
+
+CppMLCTensor::CppMLCTensor(void *self)
+    : self{self}
+{
 }

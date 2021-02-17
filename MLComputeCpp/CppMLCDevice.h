@@ -1,5 +1,4 @@
-#ifndef MLCOMPUTECPP_MLCDEVICE_H
-#define MLCOMPUTECPP_MLCDEVICE_H
+#pragma once
 
 #import "CppMLCTypes.h"
 
@@ -58,4 +57,3 @@ private:
     friend CppMLCTensor;
     friend CppMLCLayer;
 };
-#endif

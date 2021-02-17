@@ -1,18 +1,18 @@
-#ifndef MLCOMPUTECPP_MLCTENSOR_H
-#define MLCOMPUTECPP_MLCTENSOR_H
+#pragma once
 
 #include "CppMLCTensorDescriptor.h"
-#include "CppMLCTensorData.h"
+//#include "CppMLCTensorData.h"
 #include "CppMLCDevice.h"
 
 #include <string>
 
+class CppMLCBatchNormalizationLayer;
+class CppMLCTensorParameter;
+class CppMLCTensorData;
+
 class CppMLCTensor
 {
 public:
-    CppMLCTensor();
-    ~CppMLCTensor();
-
     auto getTensorId() -> uint64_t;
     auto getDescriptor() -> CppMLCTensorDescriptor;
     //auto getData() -> NSData*;
@@ -293,7 +293,10 @@ public:
     //bool bindOptimizerData(std::vector<CppMLCTensorData> const& data, std::vector<CppMLCTensorOptimizerDeviceData> const& deviceData) {}
 
 private:
-    void* self;
-};
+    CppMLCTensor(void* self);
 
-#endif
+private:
+    void* self;
+    friend CppMLCBatchNormalizationLayer;
+    friend CppMLCTensorParameter;
+};

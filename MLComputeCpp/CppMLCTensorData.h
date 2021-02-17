@@ -1,5 +1,4 @@
-#ifndef MLCOMPUTECPP_MLCTENSOR_DATA_H
-#define MLCOMPUTECPP_MLCTENSOR_DATA_H
+#pragma once
 
 #import <cstdint>
 
@@ -8,11 +7,6 @@ class CppMLCTensor;
 class CppMLCTensorData
 {
 public:
-    CppMLCTensorData();
-    ~CppMLCTensorData();
-
-    CppMLCTensorData(void* mlcTensorData);
-
     /*! @abstract   Creates a data object that holds a given number of bytes from a given buffer.
         @note       The returned object will not take ownership of the \p bytes pointer and thus will not free it on deallocation.
         @param      bytes   A buffer containing data for the new object.
@@ -40,8 +34,9 @@ public:
     auto getLength() -> uint64_t;
 
 private:
+    CppMLCTensorData(void* self);
+
+private:
     void* self;
     friend CppMLCTensor;
 };
-
-#endif

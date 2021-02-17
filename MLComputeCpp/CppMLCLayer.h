@@ -1,8 +1,9 @@
 #pragma once
 
+#include "CppMLCTypes.h"
+
 #include <cstdint>
-#import <string>
-#import "CppMLCTypes.h"
+#include <string>
 
 class CppMLCDevice;
 class CppMLCTensor;

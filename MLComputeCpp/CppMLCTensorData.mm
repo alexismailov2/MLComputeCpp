@@ -2,16 +2,6 @@
 
 #import <MLCompute/MLCTensorData.h>
 
-CppMLCTensorData::CppMLCTensorData()
-  : self{NULL}
-{
-}
-
-CppMLCTensorData::~CppMLCTensorData()
-{
-    [(id)self dealloc];
-}
-
 CppMLCTensorData::CppMLCTensorData(void* mlcTensorData)
   : self{(MLCTensorData*)mlcTensorData}
 {

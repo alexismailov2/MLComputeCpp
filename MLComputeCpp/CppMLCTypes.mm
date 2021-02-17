@@ -134,3 +134,69 @@ auto toNative(eMLCRegularizationType regularizationType) -> MLCRegularizationTyp
         default: return MLCRegularizationTypeNone;
     }
 }
+
+auto toNative(eMLCArithmeticOperation arithmeticOperation) -> MLCArithmeticOperation {
+    switch (arithmeticOperation) {
+        case eMLCArithmeticOperation::Add: return      MLCArithmeticOperationAdd;
+        case eMLCArithmeticOperation::Subtract: return MLCArithmeticOperationSubtract;
+        case eMLCArithmeticOperation::Multiply: return MLCArithmeticOperationMultiply;
+        case eMLCArithmeticOperation::Divide: return   MLCArithmeticOperationDivide;
+        case eMLCArithmeticOperation::Floor: return    MLCArithmeticOperationFloor;
+        case eMLCArithmeticOperation::Round: return    MLCArithmeticOperationRound;
+        case eMLCArithmeticOperation::Ceil: return     MLCArithmeticOperationCeil;
+        case eMLCArithmeticOperation::Sqrt: return     MLCArithmeticOperationSqrt;
+        case eMLCArithmeticOperation::Rsqrt: return    MLCArithmeticOperationRsqrt;
+        case eMLCArithmeticOperation::Sin: return      MLCArithmeticOperationSin;
+        case eMLCArithmeticOperation::Cos: return      MLCArithmeticOperationCos;
+        case eMLCArithmeticOperation::Tan: return      MLCArithmeticOperationTan;
+        case eMLCArithmeticOperation::Asin: return     MLCArithmeticOperationAsin;
+        case eMLCArithmeticOperation::Acos: return     MLCArithmeticOperationAcos;
+        case eMLCArithmeticOperation::Atan: return     MLCArithmeticOperationAtan;
+        case eMLCArithmeticOperation::Sinh: return     MLCArithmeticOperationSinh;
+        case eMLCArithmeticOperation::Cosh: return     MLCArithmeticOperationCosh;
+        case eMLCArithmeticOperation::Tanh: return     MLCArithmeticOperationTanh;
+        case eMLCArithmeticOperation::Asinh: return    MLCArithmeticOperationAsinh;
+        case eMLCArithmeticOperation::Acosh: return    MLCArithmeticOperationAcosh;
+        case eMLCArithmeticOperation::Atanh: return    MLCArithmeticOperationAtanh;
+        case eMLCArithmeticOperation::Pow: return      MLCArithmeticOperationPow;
+        case eMLCArithmeticOperation::Exp: return      MLCArithmeticOperationExp;
+        case eMLCArithmeticOperation::Exp2: return     MLCArithmeticOperationExp2;
+        case eMLCArithmeticOperation::Log: return      MLCArithmeticOperationLog;
+        case eMLCArithmeticOperation::Log2: return     MLCArithmeticOperationLog2;
+        default:
+        case eMLCArithmeticOperation::Count: return    MLCArithmeticOperationCount;
+    }
+}
+
+auto MLCArithmeticOperationToCpp(MLCArithmeticOperation arithmeticOperation) -> eMLCArithmeticOperation {
+    switch (arithmeticOperation) {
+        case MLCArithmeticOperationAdd: return      eMLCArithmeticOperation::Add;
+        case MLCArithmeticOperationSubtract: return eMLCArithmeticOperation::Subtract;
+        case MLCArithmeticOperationMultiply: return eMLCArithmeticOperation::Multiply;
+        case MLCArithmeticOperationDivide: return   eMLCArithmeticOperation::Divide;
+        case MLCArithmeticOperationFloor: return    eMLCArithmeticOperation::Floor;
+        case MLCArithmeticOperationRound: return    eMLCArithmeticOperation::Round;
+        case MLCArithmeticOperationCeil: return     eMLCArithmeticOperation::Ceil;
+        case MLCArithmeticOperationSqrt: return     eMLCArithmeticOperation::Sqrt;
+        case MLCArithmeticOperationRsqrt: return    eMLCArithmeticOperation::Rsqrt;
+        case MLCArithmeticOperationSin: return      eMLCArithmeticOperation::Sin;
+        case MLCArithmeticOperationCos: return      eMLCArithmeticOperation::Cos;
+        case MLCArithmeticOperationTan: return      eMLCArithmeticOperation::Tan;
+        case MLCArithmeticOperationAsin: return     eMLCArithmeticOperation::Asin;
+        case MLCArithmeticOperationAcos: return     eMLCArithmeticOperation::Acos;
+        case MLCArithmeticOperationAtan: return     eMLCArithmeticOperation::Atan;
+        case MLCArithmeticOperationSinh: return     eMLCArithmeticOperation::Sinh;
+        case MLCArithmeticOperationCosh: return     eMLCArithmeticOperation::Cosh;
+        case MLCArithmeticOperationTanh: return     eMLCArithmeticOperation::Tanh;
+        case MLCArithmeticOperationAsinh: return    eMLCArithmeticOperation::Asinh;
+        case MLCArithmeticOperationAcosh: return    eMLCArithmeticOperation::Acosh;
+        case MLCArithmeticOperationAtanh: return    eMLCArithmeticOperation::Atanh;
+        case MLCArithmeticOperationPow: return      eMLCArithmeticOperation::Pow;
+        case MLCArithmeticOperationExp: return      eMLCArithmeticOperation::Exp;
+        case MLCArithmeticOperationExp2: return     eMLCArithmeticOperation::Exp2;
+        case MLCArithmeticOperationLog: return      eMLCArithmeticOperation::Log;
+        case MLCArithmeticOperationLog2: return     eMLCArithmeticOperation::Log2;
+        default:
+        case MLCArithmeticOperationCount: return    eMLCArithmeticOperation::Count;
+    }
+}

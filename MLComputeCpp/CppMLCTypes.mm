@@ -200,3 +200,39 @@ auto MLCArithmeticOperationToCpp(MLCArithmeticOperation arithmeticOperation) -> 
         case MLCArithmeticOperationCount: return    eMLCArithmeticOperation::Count;
     }
 }
+
+auto toNative(eMLCConvolutionType convolutionType) -> MLCConvolutionType {
+    switch(convolutionType) {
+        case eMLCConvolutionType::Standard: return MLCConvolutionTypeStandard;
+        case eMLCConvolutionType::Transposed: return MLCConvolutionTypeTransposed;
+        case eMLCConvolutionType::Depthwise: return MLCConvolutionTypeDepthwise;
+        default: return MLCConvolutionTypeStandard;
+    }
+}
+
+auto MLCConvolutionTypeToCpp(MLCConvolutionType convolutionType) -> eMLCConvolutionType {
+    switch(convolutionType) {
+        case MLCConvolutionTypeStandard: return eMLCConvolutionType::Standard;
+        case MLCConvolutionTypeTransposed: return eMLCConvolutionType::Transposed;
+        case MLCConvolutionTypeDepthwise: return eMLCConvolutionType::Depthwise;
+        default: return eMLCConvolutionType::Standard;
+    }
+}
+
+auto toNative(eMLCPaddingPolicy paddingPolicy) -> MLCPaddingPolicy {
+    switch(paddingPolicy) {
+        case eMLCPaddingPolicy::Same: return MLCPaddingPolicySame;
+        case eMLCPaddingPolicy::Valid: return MLCPaddingPolicyValid;
+        case eMLCPaddingPolicy::UsePaddingSize: return MLCPaddingPolicyUsePaddingSize;
+        default: return MLCPaddingPolicySame;
+    }
+}
+
+auto MLCPaddingPolicyToCpp(MLCPaddingPolicy paddingPolicy) -> eMLCPaddingPolicy {
+    switch(paddingPolicy) {
+        case MLCPaddingPolicySame: return eMLCPaddingPolicy::Same;
+        case MLCPaddingPolicyValid: return eMLCPaddingPolicy::Valid;
+        case MLCPaddingPolicyUsePaddingSize: return eMLCPaddingPolicy::UsePaddingSize;
+        default: return eMLCPaddingPolicy::Same;
+    }
+}

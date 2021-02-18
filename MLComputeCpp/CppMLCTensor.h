@@ -9,6 +9,7 @@
 class CppMLCBatchNormalizationLayer;
 class CppMLCTensorParameter;
 class CppMLCTensorData;
+class CppMLCConvolutionLayer;
 
 class CppMLCTensor
 {
@@ -299,4 +300,5 @@ private:
     void* self;
     friend CppMLCBatchNormalizationLayer;
     friend CppMLCTensorParameter;
+    friend CppMLCConvolutionLayer;
 };

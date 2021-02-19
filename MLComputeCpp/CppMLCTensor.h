@@ -10,6 +10,8 @@ class CppMLCBatchNormalizationLayer;
 class CppMLCTensorParameter;
 class CppMLCTensorData;
 class CppMLCConvolutionLayer;
+class CppMLCEmbeddingLayer;
+class CppMLCFullyConnectedLayer;
 
 class CppMLCTensor
 {
@@ -301,4 +303,6 @@ private:
     friend CppMLCBatchNormalizationLayer;
     friend CppMLCTensorParameter;
     friend CppMLCConvolutionLayer;
+    friend CppMLCEmbeddingLayer;
+    friend CppMLCFullyConnectedLayer;
 };

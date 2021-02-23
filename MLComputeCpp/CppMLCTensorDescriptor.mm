@@ -20,7 +20,7 @@
 
 CppMLCTensorDescriptor::CppMLCTensorDescriptor(std::vector<uint32_t> const& shape,
                                                eMLCDataType dataType)
-    : self{[MLCTensorDescriptor descriptorWithShape:toNSArray(shape)
+    : self{[MLCTensorDescriptor descriptorWithShape:CppMLCTypesPrivate::toNSArray(shape)
                                            dataType:toNative(dataType)]}
 {
 }
@@ -29,8 +29,8 @@ CppMLCTensorDescriptor::CppMLCTensorDescriptor(std::vector<uint32_t> const& shap
                                                std::vector<uint32_t> const& sequenceLengths,
                                                bool sortedSequences,
                                                eMLCDataType dataType)
-    : self{[MLCTensorDescriptor descriptorWithShape:toNSArray(shape)
-                                    sequenceLengths:toNSArray(sequenceLengths)
+    : self{[MLCTensorDescriptor descriptorWithShape:CppMLCTypesPrivate::toNSArray(shape)
+                                    sequenceLengths:CppMLCTypesPrivate::toNSArray(sequenceLengths)
                                     sortedSequences:(sortedSequences) ? YES : NO
                                            dataType:toNative(dataType)]}
 {

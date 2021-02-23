@@ -29,6 +29,11 @@ void CppMLCTensor::setLabel(std::string const& label)
     [((MLCTensor*)self).label initWithUTF8String:label.c_str()];
 }
 
+
+auto CppMLCTensor::getDevice() -> CppMLCDevice {
+    return CppMLCDevice{((MLCTensor*)self).device};
+}
+
 CppMLCTensor::CppMLCTensor(const CppMLCTensorDescriptor &tensorDescriptor)
     : self{[MLCTensor tensorWithDescriptor:(MLCTensorDescriptor*)tensorDescriptor.self]}
 {
@@ -42,7 +47,7 @@ CppMLCTensor::CppMLCTensor(CppMLCTensorDescriptor const& tensorDescriptor,
 }
 
 CppMLCTensor::CppMLCTensor(std::vector<uint32_t> const& shape)
-    : self{[MLCTensor tensorWithShape:toNSArray(shape)]}
+    : self{[MLCTensor tensorWithShape:CppMLCTypesPrivate::toNSArray(shape)]}
 {
 }
 
@@ -53,26 +58,26 @@ CppMLCTensor::CppMLCTensor(CppMLCTensorDescriptor const& tensorDescriptor, CppML
 }
 
 CppMLCTensor::CppMLCTensor(std::vector<uint32_t> const& shape, eMLCRandomInitializerType randomInitializerType)
-    : self{[MLCTensor tensorWithShape:toNSArray(shape)
+    : self{[MLCTensor tensorWithShape:CppMLCTypesPrivate::toNSArray(shape)
                 randomInitializerType:toNative(randomInitializerType)]}
 {
 }
 
 CppMLCTensor::CppMLCTensor(const std::vector<uint32_t> &shape, eMLCDataType dataType)
-    : self{[MLCTensor tensorWithShape:toNSArray(shape)
+    : self{[MLCTensor tensorWithShape:CppMLCTypesPrivate::toNSArray(shape)
                              dataType:toNative(dataType)]}
 {
 }
 
 CppMLCTensor::CppMLCTensor(const std::vector<uint32_t> &shape, const CppMLCTensorData &data, eMLCDataType dataType)
-    : self{[MLCTensor tensorWithShape:toNSArray(shape)
+    : self{[MLCTensor tensorWithShape:CppMLCTypesPrivate::toNSArray(shape)
                                  data:(MLCTensorData*)data.self
                              dataType:toNative(dataType)]}
 {
 }
 
 CppMLCTensor::CppMLCTensor(const std::vector<uint32_t> &shape, uint32_t fillData, eMLCDataType dataType)
-    : self{[MLCTensor tensorWithShape:toNSArray(shape)
+    : self{[MLCTensor tensorWithShape:CppMLCTypesPrivate::toNSArray(shape)
                          fillWithData:[NSNumber numberWithUnsignedInt:(NSUInteger)fillData]
                              dataType:toNative(dataType)]}
 {
@@ -160,3 +165,4 @@ CppMLCTensor::CppMLCTensor(void *self)
     : self{self}
 {
 }
+

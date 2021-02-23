@@ -7,6 +7,8 @@
 
 class CppMLCDevice;
 class CppMLCTensor;
+class CppMLCTypesPrivate;
+class CppMLCGraph;
 
 /*! @class      CppMLCLayer
     @abstract   The base class for all MLCompute layers
@@ -42,9 +44,13 @@ public:
      */
     static bool supportsDataType(eMLCDataType dataType, CppMLCDevice const& device);
 
+    auto getSelf() -> void*;
+
 protected:
     CppMLCLayer(void* self);
 
 private:
     void* self;
+    friend CppMLCTypesPrivate;
+    friend CppMLCGraph;
 };

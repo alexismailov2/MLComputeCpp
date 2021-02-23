@@ -1,4 +1,10 @@
-#import "CppMLCTypesPrivate.h"
+#include "CppMLCTypesPrivate.h"
+#include "CppMLCLayer.h"
+#include "CppMLCTensor.h"
+#include "CppMLCTensorData.h"
+
+#import <MLCompute/MLCLayer.h>
+#import <MLCompute/MLCTensor.h>
 
 auto toNative(eMLCActivationType activationType) -> MLCActivationType {
     switch(activationType) {
@@ -117,14 +123,6 @@ auto MLCRegularizationTypeToCpp(MLCRegularizationType regularizationType) -> eML
     }
 }
 
-auto toNSArray(const std::vector<uint32_t> &vector) -> NSArray<NSNumber *> * {
-    id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(uint32_t item) {
-        [ns addObject:[NSNumber numberWithInteger:(NSInteger)item]];
-    });
-    return ns;
-}
-
 auto toNative(eMLCRegularizationType regularizationType) -> MLCRegularizationType {
     switch(regularizationType)
     {
@@ -236,3 +234,74 @@ auto MLCPaddingPolicyToCpp(MLCPaddingPolicy paddingPolicy) -> eMLCPaddingPolicy 
         default: return eMLCPaddingPolicy::Same;
     }
 }
+
+auto CppMLCTypesPrivate::toNSArray(std::vector<uint32_t> const& vector) -> NSArray<NSNumber *> * {
+    id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(uint32_t item) {
+        [ns addObject:[NSNumber numberWithInteger:(NSInteger)item]];
+    });
+    return ns;
+}
+
+auto CppMLCTypesPrivate::toNSArray(const std::vector<CppMLCLayer> &vector) -> NSArray<MLCLayer *> * {
+    __block id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(CppMLCLayer const& item) {
+        [ns addObject:(MLCLayer*)item.self];
+    });
+    return ns;
+}
+
+auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensor> const& vector) -> NSArray<MLCTensor*>* {
+    __block id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(CppMLCTensor const& item) {
+        [ns addObject:(MLCTensor*)item.self];
+    });
+    return ns;
+}
+
+auto CppMLCTypesPrivate::NSNumberArrayTotoVector(NSArray<NSNumber *> * array) -> std::vector<uint32_t> {
+    __block std::vector<uint32_t> vector;
+    vector.reserve([array count]);
+    [array enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        vector.push_back((uint32_t)obj.unsignedIntegerValue);
+    }];
+    return vector;
+}
+
+auto CppMLCTypesPrivate::MLCLayerArrayToVector(NSArray<MLCLayer *> *array) -> std::vector<CppMLCLayer> {
+    __block std::vector<CppMLCLayer> vector;
+    vector.reserve([array count]);
+    [array enumerateObjectsUsingBlock:^(MLCLayer * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        vector.emplace_back(CppMLCLayer{obj});
+    }];
+    return vector;
+}
+
+auto CppMLCTypesPrivate::MLCTensorArrayToVector(NSArray<MLCTensor*>* array) -> std::vector<CppMLCTensor> {
+    __block std::vector<CppMLCTensor> vector;
+    vector.reserve([array count]);
+    [array enumerateObjectsUsingBlock:^(MLCTensor * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        vector.emplace_back(CppMLCTensor{obj});
+    }];
+    return vector;
+}
+
+auto CppMLCTypesPrivate::toNSDictionary(std::map<std::string, CppMLCTensorData> const& ditcionary) -> NSDictionary<NSString *, MLCTensorData *> * {
+    id ns = [NSMutableDictionary new];
+    for (auto const& item : ditcionary) {
+        [ns setObject:(MLCTensorData*)(item.second.self)
+               forKey:[NSString stringWithUTF8String:item.first.c_str()]];
+    }
+    return ns;
+}
+
+auto CppMLCTypesPrivate::toNSDictionary(std::map<std::string, CppMLCTensor> const& ditcionary) -> NSDictionary<NSString *, MLCTensor *> * {
+    id ns = [NSMutableDictionary new];
+    for (auto const& item : ditcionary) {
+        [ns setObject:(MLCTensor*)(item.second.self)
+               forKey:[NSString stringWithUTF8String:item.first.c_str()]];
+    }
+    return ns;
+}
+
+

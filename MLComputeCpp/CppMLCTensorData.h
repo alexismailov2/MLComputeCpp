@@ -3,6 +3,7 @@
 #import <cstdint>
 
 class CppMLCTensor;
+class CppMLCTypesPrivate;
 
 class CppMLCTensorData
 {
@@ -39,4 +40,5 @@ private:
 private:
     void* self;
     friend CppMLCTensor;
+    friend CppMLCTypesPrivate;
 };

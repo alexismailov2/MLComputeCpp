@@ -1,18 +1,8 @@
-#import "CppMLCDevice.h"
+#include "CppMLCDevice.h"
 
-#import "CppMLCTypes.h"
-#import "CppMLCTypesPrivate.h"
+#include "CppMLCTypesPrivate.h"
 
 #import <MLCompute/MLCDevice.h>
-
-CppMLCDevice::CppMLCDevice(void *mlcDevice)
-    : self{mlcDevice}
-{
-}
-
-CppMLCDevice::~CppMLCDevice() {
-// TODO: ????????
-}
 
 auto CppMLCDevice::getType() -> eMLCDeviceType
 {
@@ -40,4 +30,7 @@ CppMLCDevice CppMLCDevice::deviceWithType(eMLCDeviceType type, bool selectsMulti
                     selectsMultipleComputeDevices:selectsMultipleComputeDevices ? YES : NO]};
 }
 
-
+CppMLCDevice::CppMLCDevice(void* self)
+        : self{self}
+{
+}

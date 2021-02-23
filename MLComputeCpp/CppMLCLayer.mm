@@ -24,3 +24,7 @@ CppMLCLayer::CppMLCLayer(void *self)
 bool CppMLCLayer::supportsDataType(eMLCDataType dataType, const CppMLCDevice &device) {
     return [MLCLayer supportsDataType:toNative(dataType) onDevice:((MLCDevice*)device.self)] == YES;
 }
+
+auto CppMLCLayer::getSelf() -> void * {
+    return self;
+}

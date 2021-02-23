@@ -75,14 +75,14 @@ CppMLCConvolutionDescriptor::descriptorWithType(eMLCConvolutionType convolutionT
                                                 std::vector<uint32_t> paddingSizes) -> CppMLCConvolutionDescriptor {
     return CppMLCConvolutionDescriptor{
             [MLCConvolutionDescriptor descriptorWithType:toNative(convolutionType)
-                                             kernelSizes:toNSArray(kernelSizes)
+                                             kernelSizes:CppMLCTypesPrivate::toNSArray(kernelSizes)
                                        inputFeatureChannelCount:(NSUInteger)inputFeatureChannelCount
                                       outputFeatureChannelCount:(NSUInteger)outputFeatureChannelCount
                                               groupCount:(NSUInteger)groupCount
-                                                 strides:toNSArray(strides)
-                                           dilationRates:toNSArray(dilationRates)
+                                                 strides:CppMLCTypesPrivate::toNSArray(strides)
+                                           dilationRates:CppMLCTypesPrivate::toNSArray(dilationRates)
                                            paddingPolicy:toNative(paddingPolicy)
-                                            paddingSizes:toNSArray(paddingSizes)]};
+                                            paddingSizes:CppMLCTypesPrivate::toNSArray(paddingSizes)]};
 }
 
 auto CppMLCConvolutionDescriptor::descriptorWithKernelWidth(uint32_t kernelWidth,
@@ -103,12 +103,12 @@ auto CppMLCConvolutionDescriptor::descriptorWithKernelSizes(std::vector<uint32_t
                                                             eMLCPaddingPolicy paddingPolicy,
                                                             std::vector<uint32_t> paddingSizes) -> CppMLCConvolutionDescriptor {
     return CppMLCConvolutionDescriptor{
-            [MLCConvolutionDescriptor descriptorWithKernelSizes:toNSArray(kernelSizes)
+            [MLCConvolutionDescriptor descriptorWithKernelSizes:CppMLCTypesPrivate::toNSArray(kernelSizes)
                                        inputFeatureChannelCount:(NSUInteger)inputFeatureChannelCount
                                       outputFeatureChannelCount:(NSUInteger)outputFeatureChannelCount
-                                                        strides:toNSArray(strides)
+                                                        strides:CppMLCTypesPrivate::toNSArray(strides)
                                                   paddingPolicy:toNative(paddingPolicy)
-                                                   paddingSizes:toNSArray(paddingSizes)]};
+                                                   paddingSizes:CppMLCTypesPrivate::toNSArray(paddingSizes)]};
 }
 
 auto CppMLCConvolutionDescriptor::descriptorWithKernelSizes(std::vector<uint32_t> kernelSizes,
@@ -120,14 +120,14 @@ auto CppMLCConvolutionDescriptor::descriptorWithKernelSizes(std::vector<uint32_t
                                                             eMLCPaddingPolicy paddingPolicy,
                                                             std::vector<uint32_t> paddingSizes) -> CppMLCConvolutionDescriptor {
     return CppMLCConvolutionDescriptor{
-            [MLCConvolutionDescriptor descriptorWithKernelSizes:toNSArray(kernelSizes)
+            [MLCConvolutionDescriptor descriptorWithKernelSizes:CppMLCTypesPrivate::toNSArray(kernelSizes)
                                        inputFeatureChannelCount:(NSUInteger)inputFeatureChannelCount
                                       outputFeatureChannelCount:(NSUInteger)outputFeatureChannelCount
                                                      groupCount:(NSUInteger)groupCount
-                                                        strides:toNSArray(strides)
-                                                  dilationRates:toNSArray(dilationRates)
+                                                        strides:CppMLCTypesPrivate::toNSArray(strides)
+                                                  dilationRates:CppMLCTypesPrivate::toNSArray(dilationRates)
                                                   paddingPolicy:toNative(paddingPolicy)
-                                                   paddingSizes:toNSArray(paddingSizes)]};
+                                                   paddingSizes:CppMLCTypesPrivate::toNSArray(paddingSizes)]};
 }
 
 auto
@@ -149,12 +149,12 @@ auto CppMLCConvolutionDescriptor::convolutionTransposeDescriptorWithKernelSizes(
                                                                                 eMLCPaddingPolicy paddingPolicy,
                                                                                 std::vector<uint32_t> paddingSizes) -> CppMLCConvolutionDescriptor {
     return CppMLCConvolutionDescriptor{
-            [MLCConvolutionDescriptor convolutionTransposeDescriptorWithKernelSizes:toNSArray(kernelSizes)
+            [MLCConvolutionDescriptor convolutionTransposeDescriptorWithKernelSizes:CppMLCTypesPrivate::toNSArray(kernelSizes)
                                                            inputFeatureChannelCount:(NSUInteger)inputFeatureChannelCount
                                                           outputFeatureChannelCount:(NSUInteger)outputFeatureChannelCount
-                                                                            strides:toNSArray(strides)
+                                                                            strides:CppMLCTypesPrivate::toNSArray(strides)
                                                                       paddingPolicy:toNative(paddingPolicy)
-                                                                       paddingSizes:toNSArray(paddingSizes)]};
+                                                                       paddingSizes:CppMLCTypesPrivate::toNSArray(paddingSizes)]};
 }
 
 auto CppMLCConvolutionDescriptor::convolutionTransposeDescriptorWithKernelSizes(std::vector<uint32_t> kernelSizes,
@@ -166,14 +166,14 @@ auto CppMLCConvolutionDescriptor::convolutionTransposeDescriptorWithKernelSizes(
                                                                                 eMLCPaddingPolicy paddingPolicy,
                                                                                 std::vector<uint32_t> paddingSizes) -> CppMLCConvolutionDescriptor {
     return CppMLCConvolutionDescriptor{
-            [MLCConvolutionDescriptor convolutionTransposeDescriptorWithKernelSizes:toNSArray(kernelSizes)
+            [MLCConvolutionDescriptor convolutionTransposeDescriptorWithKernelSizes:CppMLCTypesPrivate::toNSArray(kernelSizes)
                                                            inputFeatureChannelCount:(NSUInteger)inputFeatureChannelCount
                                                           outputFeatureChannelCount:(NSUInteger)outputFeatureChannelCount
                                                                          groupCount:(NSUInteger)groupCount
-                                                                            strides:toNSArray(strides)
-                                                                      dilationRates:toNSArray(dilationRates)
+                                                                            strides:CppMLCTypesPrivate::toNSArray(strides)
+                                                                      dilationRates:CppMLCTypesPrivate::toNSArray(dilationRates)
                                                                       paddingPolicy:toNative(paddingPolicy)
-                                                                       paddingSizes:toNSArray(paddingSizes)]};
+                                                                       paddingSizes:CppMLCTypesPrivate::toNSArray(paddingSizes)]};
 }
 
 auto
@@ -196,12 +196,12 @@ auto CppMLCConvolutionDescriptor::depthwiseConvolutionDescriptorWithKernelSizes(
                                                                                 eMLCPaddingPolicy paddingPolicy,
                                                                                 std::vector<uint32_t> paddingSizes) -> CppMLCConvolutionDescriptor {
     return CppMLCConvolutionDescriptor{
-            [MLCConvolutionDescriptor depthwiseConvolutionDescriptorWithKernelSizes:toNSArray(kernelSizes)
+            [MLCConvolutionDescriptor depthwiseConvolutionDescriptorWithKernelSizes:CppMLCTypesPrivate::toNSArray(kernelSizes)
                                                            inputFeatureChannelCount:(NSUInteger)inputFeatureChannelCount
                                                                   channelMultiplier:(NSUInteger)channelMultiplier
-                                                                            strides:toNSArray(strides)
+                                                                            strides:CppMLCTypesPrivate::toNSArray(strides)
                                                                       paddingPolicy:toNative(paddingPolicy)
-                                                                       paddingSizes:toNSArray(paddingSizes)]};
+                                                                       paddingSizes:CppMLCTypesPrivate::toNSArray(paddingSizes)]};
 }
 
 auto CppMLCConvolutionDescriptor::depthwiseConvolutionDescriptorWithKernelSizes(std::vector<uint32_t> kernelSizes,
@@ -212,13 +212,13 @@ auto CppMLCConvolutionDescriptor::depthwiseConvolutionDescriptorWithKernelSizes(
                                                                                 eMLCPaddingPolicy paddingPolicy,
                                                                                 std::vector<uint32_t> paddingSizes) -> CppMLCConvolutionDescriptor {
     return CppMLCConvolutionDescriptor{
-        [MLCConvolutionDescriptor depthwiseConvolutionDescriptorWithKernelSizes:toNSArray(kernelSizes)
+        [MLCConvolutionDescriptor depthwiseConvolutionDescriptorWithKernelSizes:CppMLCTypesPrivate::toNSArray(kernelSizes)
                                                        inputFeatureChannelCount:(NSUInteger)inputFeatureChannelCount
                                                               channelMultiplier:(NSUInteger)channelMultiplier
-                                                                        strides:toNSArray(strides)
-                                                                  dilationRates:toNSArray(dilationRates)
+                                                                        strides:CppMLCTypesPrivate::toNSArray(strides)
+                                                                  dilationRates:CppMLCTypesPrivate::toNSArray(dilationRates)
                                                                   paddingPolicy:toNative(paddingPolicy)
-                                                                   paddingSizes:toNSArray(paddingSizes)]};
+                                                                   paddingSizes:CppMLCTypesPrivate::toNSArray(paddingSizes)]};
 }
 
 CppMLCConvolutionDescriptor::CppMLCConvolutionDescriptor(void *self)

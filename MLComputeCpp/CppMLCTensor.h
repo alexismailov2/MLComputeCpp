@@ -12,6 +12,8 @@ class CppMLCTensorData;
 class CppMLCConvolutionLayer;
 class CppMLCEmbeddingLayer;
 class CppMLCFullyConnectedLayer;
+class CppMLCGraph;
+class CppMLCTypesPrivate;
 
 class CppMLCTensor
 {
@@ -21,7 +23,7 @@ public:
     //auto getData() -> NSData*;
     auto getLabel() -> std::string;
     void setLabel(std::string const& label);
-//    auto getDevice() -> MLCDevice*;
+    auto getDevice() -> CppMLCDevice;
 //    auto getOptimizerData() -> NSArray<MLCTensorData*>*;
 //    auto getOptimizerDeviceData() -> NSArray<MLCTensorOptimizerDeviceData *> *;
 
@@ -305,4 +307,6 @@ private:
     friend CppMLCConvolutionLayer;
     friend CppMLCEmbeddingLayer;
     friend CppMLCFullyConnectedLayer;
+    friend CppMLCGraph;
+    friend CppMLCTypesPrivate;
 };

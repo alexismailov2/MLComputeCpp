@@ -1,17 +1,14 @@
 #pragma once
 
-#import "CppMLCTypes.h"
+#include "CppMLCTypes.h"
 
 class CppMLCTensor;
 class CppMLCLayer;
+class CppMLCGraph;
 
-class CppMLCDevice {
-private:
-    CppMLCDevice(void* mlcDevice);
-
+class CppMLCDevice
+{
 public:
-    ~CppMLCDevice();
-
     /*! @property   type
         @abstract   The device type.
         @discussion Recommend that developers use MLCDeviceTypeAny as the device type.
@@ -53,7 +50,11 @@ public:
      */
     //static CppMLCDevice deviceWithGPUDevices((NSArray<id<MTLDevice>>* gpus) {};
 private:
+    CppMLCDevice(void* self);
+
+private:
     void* self;
     friend CppMLCTensor;
     friend CppMLCLayer;
+    friend CppMLCGraph;
 };

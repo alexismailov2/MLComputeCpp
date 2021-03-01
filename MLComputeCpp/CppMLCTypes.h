@@ -1,7 +1,13 @@
-#ifndef MLCOMPUTECPP_MLCTYPES_H
-#define MLCOMPUTECPP_MLCTYPES_H
+#pragma once
 
 #include <cstdint>
+#include <functional>
+
+class CppMLCTensor;
+
+/*! @abstract A callback completion handler you execute when a graph finishes execution.
+ */
+using CppMLCGraphCompletionHandler = std::function<void(CppMLCTensor const&, std::string, std::string)>;
 
 /*!
  *  @enum      eMLCDataType
@@ -247,5 +253,3 @@ enum class eMLCLSTMResultMode : uint64_t {
 //NSString *MLCSoftmaxOperationDebugDescription(MLCSoftmaxOperation operation)
 //NSString *MLCSampleModeDebugDescription(MLCSampleMode mode)
 //NSString *MLCLSTMResultModeDebugDescription(MLCLSTMResultMode mode)
-
-#endif

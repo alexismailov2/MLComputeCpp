@@ -7,6 +7,8 @@
 #include <vector>
 #include <map>
 
+class CppMLCTypesPrivate;
+
 /*! @class      MLCGraph
     @discussion A graph of layers that can be used to build a training or inference graph
  */
@@ -170,9 +172,10 @@ public:
      */
     auto resultTensorsForLayer(CppMLCLayer const& layer) -> std::vector<CppMLCTensor>;
 
-private:
+protected:
     CppMLCGraph(void* self);
 
 private:
     void* self;
+    friend CppMLCTypesPrivate;
 };

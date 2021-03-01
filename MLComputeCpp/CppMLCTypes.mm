@@ -2,6 +2,8 @@
 #include "CppMLCLayer.h"
 #include "CppMLCTensor.h"
 #include "CppMLCTensorData.h"
+#include "CppMLCGraph.h"
+#include "CppMLCInferenceGraph.h"
 
 #import <MLCompute/MLCLayer.h>
 #import <MLCompute/MLCTensor.h>
@@ -226,6 +228,27 @@ auto toNative(eMLCPaddingPolicy paddingPolicy) -> MLCPaddingPolicy {
     }
 }
 
+auto toNative(eMLCExecutionOptions executionOptions) -> MLCExecutionOptions {
+    switch(executionOptions) {
+        case eMLCExecutionOptions::None: return MLCExecutionOptionsNone;
+        case eMLCExecutionOptions::SkipWritingInputDataToDevice: return MLCExecutionOptionsSkipWritingInputDataToDevice;
+        case eMLCExecutionOptions::Synchronous: return MLCExecutionOptionsSynchronous;
+        case eMLCExecutionOptions::ForwardForInference: return MLCExecutionOptionsForwardForInference;
+        default: return MLCExecutionOptionsNone;
+    }
+}
+
+auto toNative(eMLCGraphCompilationOptions graphCompilationOptions) -> MLCGraphCompilationOptions {
+    switch(graphCompilationOptions) {
+        case eMLCGraphCompilationOptions::None: return MLCGraphCompilationOptionsNone;
+        case eMLCGraphCompilationOptions::DebugLayers: return MLCGraphCompilationOptionsDebugLayers;
+        case eMLCGraphCompilationOptions::DisableLayerFusion: return MLCGraphCompilationOptionsDisableLayerFusion;
+        case eMLCGraphCompilationOptions::LinkGraphs: return MLCGraphCompilationOptionsLinkGraphs;
+        case eMLCGraphCompilationOptions::ComputeAllGradients: return MLCGraphCompilationOptionsComputeAllGradients;
+        default: return MLCGraphCompilationOptionsNone;
+    }
+}
+
 auto MLCPaddingPolicyToCpp(MLCPaddingPolicy paddingPolicy) -> eMLCPaddingPolicy {
     switch(paddingPolicy) {
         case MLCPaddingPolicySame: return eMLCPaddingPolicy::Same;
@@ -301,6 +324,22 @@ auto CppMLCTypesPrivate::toNSDictionary(std::map<std::string, CppMLCTensor> cons
         [ns setObject:(MLCTensor*)(item.second.self)
                forKey:[NSString stringWithUTF8String:item.first.c_str()]];
     }
+    return ns;
+}
+
+auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCGraph> const& vector) -> NSArray<MLCGraph *> * {
+    __block id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(CppMLCGraph const& item) {
+        [ns addObject:(MLCGraph*)item.self];
+    });
+    return ns;
+}
+
+auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCInferenceGraph> const& vector) -> NSArray<MLCInferenceGraph *> * {
+    __block id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(CppMLCInferenceGraph const& item) {
+        [ns addObject:(MLCInferenceGraph*)item.self];
+    });
     return ns;
 }
 

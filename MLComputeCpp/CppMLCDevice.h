@@ -5,6 +5,8 @@
 class CppMLCTensor;
 class CppMLCLayer;
 class CppMLCGraph;
+class CppMLCInferenceGraph;
+class CppMLCTypesPrivate;
 
 class CppMLCDevice
 {
@@ -57,4 +59,6 @@ private:
     friend CppMLCTensor;
     friend CppMLCLayer;
     friend CppMLCGraph;
+    friend CppMLCInferenceGraph;
+    friend CppMLCTypesPrivate;
 };

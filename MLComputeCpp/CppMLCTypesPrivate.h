@@ -15,6 +15,8 @@ auto toNative(eMLCRegularizationType regularizationType) -> MLCRegularizationTyp
 auto toNative(eMLCArithmeticOperation arithmeticOperation) -> MLCArithmeticOperation;
 auto toNative(eMLCConvolutionType convolutionType) -> MLCConvolutionType;
 auto toNative(eMLCPaddingPolicy paddingPolicy) -> MLCPaddingPolicy;
+auto toNative(eMLCExecutionOptions executionOptions) -> MLCExecutionOptions;
+auto toNative(eMLCGraphCompilationOptions graphCompilationOptions) -> MLCGraphCompilationOptions;
 
 auto MLCDataTypeToCpp(MLCDataType dataType) -> eMLCDataType;
 auto MLCActivationTypeToCpp(MLCActivationType activationType) -> eMLCActivationType;
@@ -27,9 +29,14 @@ auto MLCPaddingPolicyToCpp(MLCPaddingPolicy paddingPolicy) -> eMLCPaddingPolicy;
 @class MLCLayer;
 @class MLCTensor;
 @class MLCTensorData;
+@class MLCGraph;
+@class MLCInferenceGraph;
+
 class CppMLCLayer;
 class CppMLCTensor;
 class CppMLCTensorData;
+class CppMLCGraph;
+class CppMLCInferenceGraph;
 
 class CppMLCTypesPrivate
 {
@@ -45,6 +52,10 @@ public:
 
     static auto toNSDictionary(std::map<std::string, CppMLCTensorData> const& tensorDataDisctionary) -> NSDictionary<NSString*, MLCTensorData*>*;
     static auto toNSDictionary(std::map<std::string, CppMLCTensor> const& tensorDisctionary) -> NSDictionary<NSString*, MLCTensor*>*;
+
+    static auto toNSArray(std::vector<CppMLCGraph> const& vector) -> NSArray<MLCGraph*>*;
+
+    static auto toNSArray(std::vector<CppMLCInferenceGraph> const& vector) -> NSArray<MLCInferenceGraph*>*;
 };
 
 

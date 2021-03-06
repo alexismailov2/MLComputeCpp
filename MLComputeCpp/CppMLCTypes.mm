@@ -298,6 +298,74 @@ auto MLCSampleModeToCpp(MLCSampleMode sampleMode) -> eMLCSampleMode
     }
 }
 
+auto toNative(eMLCLossType lossType) -> MLCLossType
+{
+    switch(lossType)
+    {
+        case eMLCLossType::MeanAbsoluteError: return MLCLossTypeMeanAbsoluteError;
+        case eMLCLossType::MeanSquaredError: return MLCLossTypeMeanSquaredError;
+        case eMLCLossType::SoftmaxCrossEntropy: return MLCLossTypeSoftmaxCrossEntropy;
+        case eMLCLossType::SigmoidCrossEntropy: return MLCLossTypeSigmoidCrossEntropy;
+        case eMLCLossType::CategoricalCrossEntropy: return MLCLossTypeCategoricalCrossEntropy;
+        case eMLCLossType::Hinge: return MLCLossTypeHinge;
+        case eMLCLossType::Huber: return MLCLossTypeHuber;
+        case eMLCLossType::CosineDistance: return MLCLossTypeCosineDistance;
+        case eMLCLossType::Log: return MLCLossTypeLog;
+        case eMLCLossType::Count:
+        default: return MLCLossTypeCount;
+    }
+}
+
+auto MLCLossTypeToCpp(MLCLossType lossType) -> eMLCLossType
+{
+    switch(lossType)
+    {
+        case MLCLossTypeMeanAbsoluteError: return eMLCLossType::MeanAbsoluteError;
+        case MLCLossTypeMeanSquaredError: return eMLCLossType::MeanSquaredError;
+        case MLCLossTypeSoftmaxCrossEntropy: return eMLCLossType::SoftmaxCrossEntropy;
+        case MLCLossTypeSigmoidCrossEntropy: return eMLCLossType::SigmoidCrossEntropy;
+        case MLCLossTypeCategoricalCrossEntropy: return eMLCLossType::CategoricalCrossEntropy;
+        case MLCLossTypeHinge: return eMLCLossType::Hinge;
+        case MLCLossTypeHuber: return eMLCLossType::Huber;
+        case MLCLossTypeCosineDistance: return eMLCLossType::CosineDistance;
+        case MLCLossTypeLog: return eMLCLossType::Log;
+        case MLCLossTypeCount:
+        default: return eMLCLossType::Count;
+    }
+}
+
+auto toNative(eMLCReductionType reductionType) -> MLCReductionType
+{
+    switch(reductionType)
+    {
+        case eMLCReductionType::None: return MLCReductionTypeNone;
+        case eMLCReductionType::Sum: return MLCReductionTypeSum;
+        case eMLCReductionType::Mean: return MLCReductionTypeMean;
+        case eMLCReductionType::Max: return MLCReductionTypeMax;
+        case eMLCReductionType::Min: return MLCReductionTypeMin;
+        case eMLCReductionType::ArgMax: return MLCReductionTypeArgMax;
+        case eMLCReductionType::ArgMin: return MLCReductionTypeArgMin;
+        case eMLCReductionType::Count:
+        default: return MLCReductionTypeCount;
+    }
+}
+
+auto MLCReductionTypeToCpp(MLCReductionType reductionType) -> eMLCReductionType
+{
+    switch(reductionType)
+    {
+        case MLCReductionTypeNone: return eMLCReductionType::None;
+        case MLCReductionTypeSum: return eMLCReductionType::Sum;
+        case MLCReductionTypeMean: return eMLCReductionType::Mean;
+        case MLCReductionTypeMax: return eMLCReductionType::Max;
+        case MLCReductionTypeMin: return eMLCReductionType::Min;
+        case MLCReductionTypeArgMax: return eMLCReductionType::ArgMax;
+        case MLCReductionTypeArgMin: return eMLCReductionType::ArgMin;
+        case MLCReductionTypeCount:
+        default: return eMLCReductionType::Count;
+    }
+}
+
 auto CppMLCTypesPrivate::toNSArray(std::vector<uint32_t> const& vector) -> NSArray<NSNumber *> * {
     id ns = [NSMutableArray new];
     std::for_each(vector.begin(), vector.end(), ^(uint32_t item) {
@@ -381,6 +449,20 @@ auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCInferenceGraph> const& vect
         [ns addObject:(MLCInferenceGraph*)item.self];
     });
     return ns;
+}
+
+auto CppMLCTypesPrivate::NSDataToVectorFloat(NSData* data) -> std::vector<float>
+{
+    const size_t count = [data length] / sizeof(float);
+    auto first = (float *)[data bytes];
+    auto last = first + count;
+    return std::vector<float>(first, last);
+}
+
+auto CppMLCTypesPrivate::toNSData(std::vector<float> const& data) -> NSData*
+{
+    return [NSData dataWithBytes:data.data()
+                          length:(data.size() * sizeof(float))];
 }
 
 

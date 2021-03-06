@@ -15,6 +15,7 @@ class CppMLCFullyConnectedLayer;
 class CppMLCGraph;
 class CppMLCTypesPrivate;
 class CppMLCGroupNormalizationLayer;
+class CppMLCLossLayer;
 
 class CppMLCTensor
 {
@@ -311,4 +312,5 @@ private:
     friend CppMLCGraph;
     friend CppMLCTypesPrivate;
     friend CppMLCGroupNormalizationLayer;
+    friend CppMLCLossLayer;
 };

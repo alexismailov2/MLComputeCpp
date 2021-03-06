@@ -19,6 +19,8 @@ auto toNative(eMLCExecutionOptions executionOptions) -> MLCExecutionOptions;
 auto toNative(eMLCGraphCompilationOptions graphCompilationOptions) -> MLCGraphCompilationOptions;
 auto toNative(eMLCSoftmaxOperation softmaxOperation) -> MLCSoftmaxOperation;
 auto toNative(eMLCSampleMode sampleMode) -> MLCSampleMode;
+auto toNative(eMLCLossType lossType) -> MLCLossType;
+auto toNative(eMLCReductionType reductionType) -> MLCReductionType;
 
 auto MLCDataTypeToCpp(MLCDataType dataType) -> eMLCDataType;
 auto MLCActivationTypeToCpp(MLCActivationType activationType) -> eMLCActivationType;
@@ -29,6 +31,8 @@ auto MLCConvolutionTypeToCpp(MLCConvolutionType convolutionType) -> eMLCConvolut
 auto MLCPaddingPolicyToCpp(MLCPaddingPolicy paddingPolicy) -> eMLCPaddingPolicy;
 auto MLCSoftmaxOperationToCpp(MLCSoftmaxOperation softmaxOperation) -> eMLCSoftmaxOperation;
 auto MLCSampleModeToCpp(MLCSampleMode sampleMode) -> eMLCSampleMode;
+auto MLCLossTypeToCpp(MLCLossType lossType) -> eMLCLossType;
+auto MLCReductionTypeToCpp(MLCReductionType reductionType) -> eMLCReductionType;
 
 @class MLCLayer;
 @class MLCTensor;
@@ -60,6 +64,9 @@ public:
     static auto toNSArray(std::vector<CppMLCGraph> const& vector) -> NSArray<MLCGraph*>*;
 
     static auto toNSArray(std::vector<CppMLCInferenceGraph> const& vector) -> NSArray<MLCInferenceGraph*>*;
+
+    static auto NSDataToVectorFloat(NSData* data) -> std::vector<float>;
+    static auto toNSData(std::vector<float> const& data) -> NSData*;
 };
 
 

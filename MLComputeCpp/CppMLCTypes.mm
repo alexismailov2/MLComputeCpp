@@ -249,12 +249,52 @@ auto toNative(eMLCGraphCompilationOptions graphCompilationOptions) -> MLCGraphCo
     }
 }
 
+auto toNative(eMLCSoftmaxOperation softmaxOperation) -> MLCSoftmaxOperation
+{
+    switch(softmaxOperation)
+    {
+        case eMLCSoftmaxOperation::Softmax: return MLCSoftmaxOperationSoftmax;
+        case eMLCSoftmaxOperation::LogSoftmax: return MLCSoftmaxOperationLogSoftmax;
+        default: return MLCSoftmaxOperationSoftmax;
+    }
+}
+
 auto MLCPaddingPolicyToCpp(MLCPaddingPolicy paddingPolicy) -> eMLCPaddingPolicy {
     switch(paddingPolicy) {
         case MLCPaddingPolicySame: return eMLCPaddingPolicy::Same;
         case MLCPaddingPolicyValid: return eMLCPaddingPolicy::Valid;
         case MLCPaddingPolicyUsePaddingSize: return eMLCPaddingPolicy::UsePaddingSize;
         default: return eMLCPaddingPolicy::Same;
+    }
+}
+
+auto MLCSoftmaxOperationToCpp(MLCSoftmaxOperation softmaxOperation) -> eMLCSoftmaxOperation
+{
+    switch(softmaxOperation)
+    {
+        case MLCSoftmaxOperationSoftmax: return eMLCSoftmaxOperation::Softmax;
+        case MLCSoftmaxOperationLogSoftmax: return eMLCSoftmaxOperation::LogSoftmax;
+        default: return eMLCSoftmaxOperation::Softmax;
+    }
+}
+
+auto toNative(eMLCSampleMode sampleMode) -> MLCSampleMode
+{
+    switch(sampleMode)
+    {
+        case eMLCSampleMode::Linear: return MLCSampleModeLinear;
+        case eMLCSampleMode::Nearest: return MLCSampleModeNearest;
+        default: return MLCSampleModeNearest;
+    }
+}
+
+auto MLCSampleModeToCpp(MLCSampleMode sampleMode) -> eMLCSampleMode
+{
+    switch(sampleMode)
+    {
+        case MLCSampleModeLinear: return eMLCSampleMode::Linear;
+        case MLCSampleModeNearest: return eMLCSampleMode::Nearest;
+        default: return eMLCSampleMode::Nearest;
     }
 }
 
@@ -282,7 +322,7 @@ auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensor> const& vector) -> N
     return ns;
 }
 
-auto CppMLCTypesPrivate::NSNumberArrayTotoVector(NSArray<NSNumber *> * array) -> std::vector<uint32_t> {
+auto CppMLCTypesPrivate::NSNumberArrayToVector(NSArray<NSNumber *> * array) -> std::vector<uint32_t> {
     __block std::vector<uint32_t> vector;
     vector.reserve([array count]);
     [array enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {

@@ -49,7 +49,7 @@ public:
 protected:
     CppMLCLayer(void* self);
 
-private:
+protected:
     void* self;
     friend CppMLCTypesPrivate;
     friend CppMLCGraph;

@@ -48,6 +48,6 @@ public:
 protected:
     CppMLCOptimizer(void* self);
 
-private:
+protected:
     void* self;
 };

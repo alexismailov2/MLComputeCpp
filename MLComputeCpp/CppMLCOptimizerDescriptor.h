@@ -3,6 +3,7 @@
 #import "CppMLCTypes.h"
 
 class CppMLCAdamOptimizer;
+class CppMLCSGDOptimizer;
 
 /*! @class      MLCOptimizerDescriptor
     @discussion The MLCOptimizerDescriptor specifies an optimizer descriptor.
@@ -81,5 +82,6 @@ private:
 private:
     void* self;
     friend CppMLCAdamOptimizer;
+    friend CppMLCSGDOptimizer;
 };
 

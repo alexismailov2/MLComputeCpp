@@ -17,6 +17,8 @@ auto toNative(eMLCConvolutionType convolutionType) -> MLCConvolutionType;
 auto toNative(eMLCPaddingPolicy paddingPolicy) -> MLCPaddingPolicy;
 auto toNative(eMLCExecutionOptions executionOptions) -> MLCExecutionOptions;
 auto toNative(eMLCGraphCompilationOptions graphCompilationOptions) -> MLCGraphCompilationOptions;
+auto toNative(eMLCSoftmaxOperation softmaxOperation) -> MLCSoftmaxOperation;
+auto toNative(eMLCSampleMode sampleMode) -> MLCSampleMode;
 
 auto MLCDataTypeToCpp(MLCDataType dataType) -> eMLCDataType;
 auto MLCActivationTypeToCpp(MLCActivationType activationType) -> eMLCActivationType;
@@ -25,6 +27,8 @@ auto MLCRegularizationTypeToCpp(MLCRegularizationType regularizationType) -> eML
 auto MLCArithmeticOperationToCpp(MLCArithmeticOperation arithmeticOperation) -> eMLCArithmeticOperation;
 auto MLCConvolutionTypeToCpp(MLCConvolutionType convolutionType) -> eMLCConvolutionType;
 auto MLCPaddingPolicyToCpp(MLCPaddingPolicy paddingPolicy) -> eMLCPaddingPolicy;
+auto MLCSoftmaxOperationToCpp(MLCSoftmaxOperation softmaxOperation) -> eMLCSoftmaxOperation;
+auto MLCSampleModeToCpp(MLCSampleMode sampleMode) -> eMLCSampleMode;
 
 @class MLCLayer;
 @class MLCTensor;
@@ -42,7 +46,7 @@ class CppMLCTypesPrivate
 {
 public:
     static auto toNSArray(std::vector<uint32_t> const& vector) -> NSArray<NSNumber*>*;
-    static auto NSNumberArrayTotoVector(NSArray<NSNumber*>*) -> std::vector<uint32_t>;
+    static auto NSNumberArrayToVector(NSArray<NSNumber*>*) -> std::vector<uint32_t>;
 
     static auto toNSArray(std::vector<CppMLCLayer> const& vector) -> NSArray<MLCLayer*>*;
     static auto MLCLayerArrayToVector(NSArray<MLCLayer*>* array) -> std::vector<CppMLCLayer>;

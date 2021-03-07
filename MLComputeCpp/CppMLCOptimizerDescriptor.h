@@ -4,6 +4,7 @@
 
 class CppMLCAdamOptimizer;
 class CppMLCSGDOptimizer;
+class CppMLCRMSPropOptimizer;
 
 /*! @class      MLCOptimizerDescriptor
     @discussion The MLCOptimizerDescriptor specifies an optimizer descriptor.
@@ -83,5 +84,6 @@ private:
     void* self;
     friend CppMLCAdamOptimizer;
     friend CppMLCSGDOptimizer;
+    friend CppMLCRMSPropOptimizer;
 };
 

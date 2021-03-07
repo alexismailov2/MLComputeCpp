@@ -1,6 +1,6 @@
+#include "CppMLCOptimizerDescriptor.h"
 
-#import "CppMLCOptimizerDescriptor.h"
-#import "CppMLCTypesPrivate.h"
+#include "CppMLCTypesPrivate.h"
 
 #import <MLCompute/MLCOptimizerDescriptor.h>
 

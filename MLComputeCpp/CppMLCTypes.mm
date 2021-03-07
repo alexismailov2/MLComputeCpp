@@ -366,6 +366,54 @@ auto MLCReductionTypeToCpp(MLCReductionType reductionType) -> eMLCReductionType
     }
 }
 
+auto toNative(eMLCPoolingType poolingType) -> MLCPoolingType
+{
+    switch(poolingType)
+    {
+        case eMLCPoolingType::Max: return MLCPoolingTypeMax;
+        case eMLCPoolingType::Average: return MLCPoolingTypeAverage;
+        case eMLCPoolingType::L2Norm: return MLCPoolingTypeL2Norm;
+        case eMLCPoolingType::Count:
+        default: return MLCPoolingTypeCount;
+    }
+}
+
+auto toNative(eMLCPaddingType paddingType) -> MLCPaddingType
+{
+    switch(paddingType)
+    {
+        case eMLCPaddingType::Zero: return MLCPaddingTypeZero;
+        case eMLCPaddingType::Reflect: return MLCPaddingTypeReflect;
+        case eMLCPaddingType::Symmetric: return MLCPaddingTypeSymmetric;
+        case eMLCPaddingType::Constant:
+        default: return MLCPaddingTypeConstant;
+    }
+}
+
+auto MLCPoolingTypeToCpp(MLCPoolingType poolingType) -> eMLCPoolingType
+{
+    switch(poolingType)
+    {
+        case MLCPoolingTypeMax: return eMLCPoolingType::Max;
+        case MLCPoolingTypeAverage: return eMLCPoolingType::Average;
+        case MLCPoolingTypeL2Norm: return eMLCPoolingType::L2Norm;
+        case MLCPoolingTypeCount:
+        default: return eMLCPoolingType::Count;
+    }
+}
+
+auto MLCPaddingTypeToCpp(MLCPaddingType paddingType) -> eMLCPaddingType
+{
+    switch(paddingType)
+    {
+        case MLCPaddingTypeZero: return eMLCPaddingType::Zero;
+        case MLCPaddingTypeReflect: return eMLCPaddingType::Reflect;
+        case MLCPaddingTypeSymmetric: return eMLCPaddingType::Symmetric;
+        case MLCPaddingTypeConstant:
+        default: return eMLCPaddingType::Constant;
+    }
+}
+
 auto CppMLCTypesPrivate::toNSArray(std::vector<uint32_t> const& vector) -> NSArray<NSNumber *> * {
     id ns = [NSMutableArray new];
     std::for_each(vector.begin(), vector.end(), ^(uint32_t item) {

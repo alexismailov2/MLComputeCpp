@@ -21,6 +21,9 @@ auto toNative(eMLCSoftmaxOperation softmaxOperation) -> MLCSoftmaxOperation;
 auto toNative(eMLCSampleMode sampleMode) -> MLCSampleMode;
 auto toNative(eMLCLossType lossType) -> MLCLossType;
 auto toNative(eMLCReductionType reductionType) -> MLCReductionType;
+auto toNative(eMLCPoolingType poolingType) -> MLCPoolingType;
+auto toNative(eMLCPaddingType paddingType) -> MLCPaddingType;
+auto toNative(eMLCPaddingPolicy paddingPolicy) -> MLCPaddingPolicy;
 
 auto MLCDataTypeToCpp(MLCDataType dataType) -> eMLCDataType;
 auto MLCActivationTypeToCpp(MLCActivationType activationType) -> eMLCActivationType;
@@ -33,6 +36,8 @@ auto MLCSoftmaxOperationToCpp(MLCSoftmaxOperation softmaxOperation) -> eMLCSoftm
 auto MLCSampleModeToCpp(MLCSampleMode sampleMode) -> eMLCSampleMode;
 auto MLCLossTypeToCpp(MLCLossType lossType) -> eMLCLossType;
 auto MLCReductionTypeToCpp(MLCReductionType reductionType) -> eMLCReductionType;
+auto MLCPoolingTypeToCpp(MLCPoolingType poolingType) -> eMLCPoolingType;
+auto MLCPaddingTypeToCpp(MLCPaddingType paddingType) -> eMLCPaddingType;
 
 @class MLCLayer;
 @class MLCTensor;

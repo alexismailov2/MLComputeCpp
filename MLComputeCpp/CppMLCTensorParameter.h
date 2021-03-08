@@ -9,6 +9,8 @@ class CppMLCConvolutionLayer;
 class CppMLCEmbeddingLayer;
 class CppMLCFullyConnectedLayer;
 class CppMLCGroupNormalizationLayer;
+class CppMLCLayerNormalizationLayer;
+class CppMLCTypesPrivate;
 
 /*! @class      MLCTensorParameter
     @discussion A tensor parameter object.  This is used to describe input tensors that are updated by the optimizer during training.
@@ -50,6 +52,8 @@ private:
     friend CppMLCEmbeddingLayer;
     friend CppMLCFullyConnectedLayer;
     friend CppMLCGroupNormalizationLayer;
+    friend CppMLCLayerNormalizationLayer;
+    friend CppMLCTypesPrivate;
 };
 
 

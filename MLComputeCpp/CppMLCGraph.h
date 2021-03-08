@@ -175,7 +175,7 @@ public:
 protected:
     CppMLCGraph(void* self);
 
-private:
+protected:
     void* self;
     friend CppMLCTypesPrivate;
 };

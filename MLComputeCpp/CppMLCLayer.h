@@ -9,6 +9,7 @@ class CppMLCDevice;
 class CppMLCTensor;
 class CppMLCTypesPrivate;
 class CppMLCGraph;
+class CppMLCTrainingGraph;
 
 /*! @class      CppMLCLayer
     @abstract   The base class for all MLCompute layers
@@ -53,4 +54,5 @@ protected:
     void* self;
     friend CppMLCTypesPrivate;
     friend CppMLCGraph;
+    friend CppMLCTrainingGraph;
 };

@@ -44,12 +44,20 @@ auto MLCPaddingTypeToCpp(MLCPaddingType paddingType) -> eMLCPaddingType;
 @class MLCTensorData;
 @class MLCGraph;
 @class MLCInferenceGraph;
+@class MLCTensorOptimizerDeviceData;
+@class MLCTensorParameter;
+@class MLCGraph;
+@class MLCTrainingGraph;
 
 class CppMLCLayer;
 class CppMLCTensor;
 class CppMLCTensorData;
 class CppMLCGraph;
 class CppMLCInferenceGraph;
+class CppMLCTensorOptimizerDeviceData;
+class CppMLCTensorParameter;
+class CppMLCGraph;
+class CppMLCTrainingGraph;
 
 class CppMLCTypesPrivate
 {
@@ -63,12 +71,24 @@ public:
     static auto toNSArray(std::vector<CppMLCTensor> const& vector) -> NSArray<MLCTensor*>*;
     static auto MLCTensorArrayToVector(NSArray<MLCTensor*>* array) -> std::vector<CppMLCTensor>;
 
+    static auto toNSArray(std::vector<CppMLCTensorData> const& vector) -> NSArray<MLCTensorData*>*;
+    static auto MLCTensorDataArrayToVector(NSArray<MLCTensorData*>* array) -> std::vector<CppMLCTensorData>;
+
+    static auto toNSArray(std::vector<CppMLCTensorOptimizerDeviceData> const& vector) -> NSArray<MLCTensorOptimizerDeviceData*>*;
+    static auto MLCTensorOptimizerDeviceDataToVector(NSArray<MLCTensorOptimizerDeviceData*>* array) -> std::vector<CppMLCTensorOptimizerDeviceData>;
+
+    static auto toNSArray(std::vector<CppMLCTensorParameter> const& vector) -> NSArray<MLCTensorParameter*>*;
+    static auto MLCTensorParameterToVector(NSArray<MLCTensorParameter*>* array) -> std::vector<CppMLCTensorParameter>;
+
+    static auto toNSArray(std::vector<CppMLCGraph> const& vector) -> NSArray<MLCGraph*>*;
+    static auto MLCGraphToVector(NSArray<MLCGraph*>* array) -> std::vector<CppMLCGraph>;
+
     static auto toNSDictionary(std::map<std::string, CppMLCTensorData> const& tensorDataDisctionary) -> NSDictionary<NSString*, MLCTensorData*>*;
     static auto toNSDictionary(std::map<std::string, CppMLCTensor> const& tensorDisctionary) -> NSDictionary<NSString*, MLCTensor*>*;
 
-    static auto toNSArray(std::vector<CppMLCGraph> const& vector) -> NSArray<MLCGraph*>*;
-
     static auto toNSArray(std::vector<CppMLCInferenceGraph> const& vector) -> NSArray<MLCInferenceGraph*>*;
+
+    static auto toNSArray(std::vector<CppMLCTrainingGraph> const& vector) -> NSArray<MLCTrainingGraph*>*;
 
     static auto NSDataToVectorFloat(NSData* data) -> std::vector<float>;
     static auto toNSData(std::vector<float> const& data) -> NSData*;

@@ -3,35 +3,46 @@
 #import "CppMLCTensorData.h"
 #import "CppMLCTypesPrivate.h"
 
+#import <Foundation/Foundation.h>
 #import <MLCompute/MLCTensor.h>
 
-auto CppMLCTensor::getTensorId() -> uint64_t
+auto CppMLCTensor::tensorId() -> uint64_t
 {
     return (uint64_t)((MLCTensor*)self).tensorID;
 }
 
-auto CppMLCTensor::getDescriptor() -> CppMLCTensorDescriptor
+auto CppMLCTensor::descriptor() -> CppMLCTensorDescriptor
 {
     return CppMLCTensorDescriptor((void*)(((MLCTensor*)self).descriptor));
 }
 
-//auto CppMLCTensor::getData() -> NSData * {
-//
-//}
+auto CppMLCTensor::data() -> std::vector<float>
+{
+    return CppMLCTypesPrivate::NSDataToVectorFloat(((MLCTensor*)self).data);
+}
 
-auto CppMLCTensor::getLabel() -> std::string
+auto CppMLCTensor::label() -> std::string
 {
     return std::string([((MLCTensor*)self).label UTF8String]);
 }
 
-void CppMLCTensor::setLabel(std::string const& label)
+void CppMLCTensor::label(std::string const& label)
 {
     [((MLCTensor*)self).label initWithUTF8String:label.c_str()];
 }
 
-
-auto CppMLCTensor::getDevice() -> CppMLCDevice {
+auto CppMLCTensor::device() -> CppMLCDevice {
     return CppMLCDevice{((MLCTensor*)self).device};
+}
+
+auto CppMLCTensor::optimizerData() -> std::vector<CppMLCTensorData>
+{
+    return CppMLCTypesPrivate::MLCTensorDataArrayToVector(((MLCTensor*)self).optimizerData);
+}
+
+auto CppMLCTensor::optimizerDeviceData() -> std::vector<CppMLCTensorOptimizerDeviceData>
+{
+    return CppMLCTypesPrivate::MLCTensorOptimizerDeviceDataToVector(((MLCTensor*)self).optimizerDeviceData);
 }
 
 CppMLCTensor::CppMLCTensor(const CppMLCTensorDescriptor &tensorDescriptor)
@@ -133,6 +144,63 @@ CppMLCTensor::CppMLCTensor(uint32_t width, uint32_t height, uint32_t featureChan
 {
 }
 
+auto CppMLCTensor::tensorWithSequenceLength(uint32_t sequenceLength,
+                                            uint32_t featureChannelCount,
+                                            uint32_t batchSize) -> CppMLCTensor
+{
+    return CppMLCTensor{[MLCTensor tensorWithSequenceLength:(NSUInteger)sequenceLength
+                                        featureChannelCount:(NSUInteger)featureChannelCount
+                                                  batchSize:(NSUInteger)batchSize]};
+}
+
+auto CppMLCTensor::tensorWithSequenceLengths(std::vector<uint32_t> const& sequenceLengths,
+                                             bool sortedSequences,
+                                             uint32_t featureChannelCount,
+                                             uint32_t batchSize,
+                                             CppMLCTensorData& data) -> CppMLCTensor
+{
+    return CppMLCTensor{[MLCTensor tensorWithSequenceLengths:CppMLCTypesPrivate::toNSArray(sequenceLengths)
+                                             sortedSequences:sortedSequences ? YES : NO
+                                         featureChannelCount:(NSUInteger)featureChannelCount
+                                                   batchSize:(NSUInteger)batchSize
+                                                        data:(MLCTensorData*)data.self]};
+}
+
+auto CppMLCTensor::tensorWithSequenceLength(uint32_t sequenceLength,
+                                            uint32_t featureChannelCount,
+                                            uint32_t batchSize,
+                                            eMLCRandomInitializerType randomInitializerType) -> CppMLCTensor
+{
+    return CppMLCTensor{[MLCTensor tensorWithSequenceLength:(NSInteger)sequenceLength
+                                        featureChannelCount:featureChannelCount
+                                                  batchSize:(NSUInteger)batchSize
+                                      randomInitializerType:toNative(randomInitializerType)]};
+}
+
+auto CppMLCTensor::tensorWithSequenceLength(uint32_t sequenceLength,
+                                            uint32_t featureChannelCount,
+                                            uint32_t batchSize,
+                                            CppMLCTensorData &data) -> CppMLCTensor
+{
+    return CppMLCTensor{[MLCTensor tensorWithSequenceLength:(NSInteger)sequenceLength
+                                        featureChannelCount:featureChannelCount
+                                                  batchSize:(NSUInteger)batchSize
+                                                       data:(MLCTensorData*)data.self]};
+}
+
+auto CppMLCTensor::tensorWithSequenceLengths(std::vector<uint32_t> const& sequenceLengths,
+                                             bool sortedSequences,
+                                             uint32_t featureChannelCount,
+                                             uint32_t batchSize,
+                                             eMLCRandomInitializerType randomInitializerType) -> CppMLCTensor
+{
+    return CppMLCTensor{[MLCTensor tensorWithSequenceLengths:CppMLCTypesPrivate::toNSArray(sequenceLengths)
+                                             sortedSequences:sortedSequences ? YES : NO
+                                         featureChannelCount:(NSUInteger)featureChannelCount
+                                                   batchSize:(NSUInteger)batchSize
+                                       randomInitializerType:toNative(randomInitializerType)]};
+}
+
 bool CppMLCTensor::hasValidNumerics()
 {
     return ((MLCTensor*)self).hasValidNumerics == YES;
@@ -161,8 +229,23 @@ bool CppMLCTensor::bindAndWriteData(CppMLCTensorData const& data, CppMLCDevice c
                                        toDevice:(MLCDevice*)toDevice.self] == YES;
 }
 
+bool CppMLCTensor::bindOptimizerData(std::vector<CppMLCTensorData> const& data,
+                                     std::vector<CppMLCTensorOptimizerDeviceData> const& deviceData)
+{
+    return [(MLCTensor*)self bindOptimizerData:CppMLCTypesPrivate::toNSArray(data)
+                                    deviceData:CppMLCTypesPrivate::toNSArray(deviceData)] == YES;
+}
+
 CppMLCTensor::CppMLCTensor(void *self)
     : self{self}
 {
 }
+
+
+
+
+
+
+
+
 

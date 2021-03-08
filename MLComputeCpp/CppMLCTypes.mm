@@ -4,6 +4,9 @@
 #include "CppMLCTensorData.h"
 #include "CppMLCGraph.h"
 #include "CppMLCInferenceGraph.h"
+#include "CppMLCTrainingGraph.h"
+#include "CppMLCTensorOptimizerDeviceData.h"
+#include "CppMLCTensorParameter.h"
 
 #import <MLCompute/MLCLayer.h>
 #import <MLCompute/MLCTensor.h>
@@ -422,22 +425,6 @@ auto CppMLCTypesPrivate::toNSArray(std::vector<uint32_t> const& vector) -> NSArr
     return ns;
 }
 
-auto CppMLCTypesPrivate::toNSArray(const std::vector<CppMLCLayer> &vector) -> NSArray<MLCLayer *> * {
-    __block id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(CppMLCLayer const& item) {
-        [ns addObject:(MLCLayer*)item.self];
-    });
-    return ns;
-}
-
-auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensor> const& vector) -> NSArray<MLCTensor*>* {
-    __block id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(CppMLCTensor const& item) {
-        [ns addObject:(MLCTensor*)item.self];
-    });
-    return ns;
-}
-
 auto CppMLCTypesPrivate::NSNumberArrayToVector(NSArray<NSNumber *> * array) -> std::vector<uint32_t> {
     __block std::vector<uint32_t> vector;
     vector.reserve([array count]);
@@ -445,6 +432,14 @@ auto CppMLCTypesPrivate::NSNumberArrayToVector(NSArray<NSNumber *> * array) -> s
         vector.push_back((uint32_t)obj.unsignedIntegerValue);
     }];
     return vector;
+}
+
+auto CppMLCTypesPrivate::toNSArray(const std::vector<CppMLCLayer> &vector) -> NSArray<MLCLayer *> * {
+    __block id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(CppMLCLayer const& item) {
+        [ns addObject:(MLCLayer*)item.self];
+    });
+    return ns;
 }
 
 auto CppMLCTypesPrivate::MLCLayerArrayToVector(NSArray<MLCLayer *> *array) -> std::vector<CppMLCLayer> {
@@ -456,11 +451,87 @@ auto CppMLCTypesPrivate::MLCLayerArrayToVector(NSArray<MLCLayer *> *array) -> st
     return vector;
 }
 
+auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensor> const& vector) -> NSArray<MLCTensor*>* {
+    __block id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(CppMLCTensor const& item) {
+        [ns addObject:(MLCTensor*)item.self];
+    });
+    return ns;
+}
+
 auto CppMLCTypesPrivate::MLCTensorArrayToVector(NSArray<MLCTensor*>* array) -> std::vector<CppMLCTensor> {
     __block std::vector<CppMLCTensor> vector;
     vector.reserve([array count]);
     [array enumerateObjectsUsingBlock:^(MLCTensor * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         vector.emplace_back(CppMLCTensor{obj});
+    }];
+    return vector;
+}
+
+auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensorData> const& vector) -> NSArray<MLCTensorData*>* {
+    __block id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(CppMLCTensorData const& item) {
+        [ns addObject:(MLCTensorData*)item.self];
+    });
+    return ns;
+}
+
+auto CppMLCTypesPrivate::MLCTensorDataArrayToVector(NSArray<MLCTensorData*>* array) -> std::vector<CppMLCTensorData> {
+    __block std::vector<CppMLCTensorData> vector;
+    vector.reserve([array count]);
+    [array enumerateObjectsUsingBlock:^(MLCTensorData * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        vector.emplace_back(CppMLCTensorData{obj});
+    }];
+    return vector;
+}
+
+auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensorOptimizerDeviceData> const& vector) -> NSArray<MLCTensorOptimizerDeviceData*>* {
+    __block id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(CppMLCTensorOptimizerDeviceData const& item) {
+        [ns addObject:(MLCTensorOptimizerDeviceData*)item.self];
+    });
+    return ns;
+}
+
+auto CppMLCTypesPrivate::MLCTensorOptimizerDeviceDataToVector(NSArray<MLCTensorOptimizerDeviceData*>* array) -> std::vector<CppMLCTensorOptimizerDeviceData> {
+    __block std::vector<CppMLCTensorOptimizerDeviceData> vector;
+    vector.reserve([array count]);
+    [array enumerateObjectsUsingBlock:^(MLCTensorOptimizerDeviceData * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        vector.emplace_back(CppMLCTensorOptimizerDeviceData{obj});
+    }];
+    return vector;
+}
+
+auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensorParameter> const& vector) -> NSArray<MLCTensorParameter*>* {
+    __block id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(CppMLCTensorParameter const& item) {
+        [ns addObject:(MLCTensorParameter*)item.self];
+    });
+    return ns;
+}
+
+auto CppMLCTypesPrivate::MLCTensorParameterToVector(NSArray<MLCTensorParameter*>* array) -> std::vector<CppMLCTensorParameter> {
+    __block std::vector<CppMLCTensorParameter> vector;
+    vector.reserve([array count]);
+    [array enumerateObjectsUsingBlock:^(MLCTensorParameter * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        vector.emplace_back(CppMLCTensorParameter{obj});
+    }];
+    return vector;
+}
+
+auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCGraph> const& vector) -> NSArray<MLCGraph*>* {
+    __block id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(CppMLCGraph const& item) {
+        [ns addObject:(MLCGraph*)item.self];
+    });
+    return ns;
+}
+
+auto CppMLCTypesPrivate::MLCGraphToVector(NSArray<MLCGraph*>* array) -> std::vector<CppMLCGraph> {
+    __block std::vector<CppMLCGraph> vector;
+    vector.reserve([array count]);
+    [array enumerateObjectsUsingBlock:^(MLCGraph * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        vector.emplace_back(CppMLCGraph{obj});
     }];
     return vector;
 }
@@ -483,18 +554,18 @@ auto CppMLCTypesPrivate::toNSDictionary(std::map<std::string, CppMLCTensor> cons
     return ns;
 }
 
-auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCGraph> const& vector) -> NSArray<MLCGraph *> * {
-    __block id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(CppMLCGraph const& item) {
-        [ns addObject:(MLCGraph*)item.self];
-    });
-    return ns;
-}
-
 auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCInferenceGraph> const& vector) -> NSArray<MLCInferenceGraph *> * {
     __block id ns = [NSMutableArray new];
     std::for_each(vector.begin(), vector.end(), ^(CppMLCInferenceGraph const& item) {
         [ns addObject:(MLCInferenceGraph*)item.self];
+    });
+    return ns;
+}
+
+auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTrainingGraph> const& vector) -> NSArray<MLCTrainingGraph *> * {
+    __block id ns = [NSMutableArray new];
+    std::for_each(vector.begin(), vector.end(), ^(CppMLCTrainingGraph const& item) {
+        [ns addObject:(MLCTrainingGraph*)item.self];
     });
     return ns;
 }

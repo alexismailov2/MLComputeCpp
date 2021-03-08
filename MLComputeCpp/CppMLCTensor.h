@@ -1,8 +1,9 @@
 #pragma once
 
 #include "CppMLCTensorDescriptor.h"
-//#include "CppMLCTensorData.h"
+#include "CppMLCTensorData.h"
 #include "CppMLCDevice.h"
+#include "CppMLCTensorOptimizerDeviceData.h"
 
 #include <string>
 
@@ -16,18 +17,20 @@ class CppMLCGraph;
 class CppMLCTypesPrivate;
 class CppMLCGroupNormalizationLayer;
 class CppMLCLossLayer;
+class CppMLCLayerNormalizationLayer;
+class CppMLCTrainingGraph;
 
 class CppMLCTensor
 {
 public:
-    auto getTensorId() -> uint64_t;
-    auto getDescriptor() -> CppMLCTensorDescriptor;
-    //auto getData() -> NSData*;
-    auto getLabel() -> std::string;
-    void setLabel(std::string const& label);
-    auto getDevice() -> CppMLCDevice;
-//    auto getOptimizerData() -> NSArray<MLCTensorData*>*;
-//    auto getOptimizerDeviceData() -> NSArray<MLCTensorOptimizerDeviceData *> *;
+    auto tensorId() -> uint64_t;
+    auto descriptor() -> CppMLCTensorDescriptor;
+    auto data() -> std::vector<float>;
+    auto label() -> std::string;
+    void label(std::string const& label);
+    auto device() -> CppMLCDevice;
+    auto optimizerData() -> std::vector<CppMLCTensorData>;
+    auto optimizerDeviceData() -> std::vector<CppMLCTensorOptimizerDeviceData>;
 
     /*! @abstract   Create a MLCTensor object
         @discussion Create a tensor object without any data
@@ -168,10 +171,10 @@ public:
         @param      batchSize                  The tensor batch size
         @return     A new MLCTensor object
      */
-    //CppMLCTensor()
-//    + (instancetype)tensorWithSequenceLength:(NSUInteger)sequenceLength
-//            featureChannelCount:(NSUInteger)featureChannelCount
-//            batchSize:(NSUInteger)batchSize;
+    static
+    auto tensorWithSequenceLength(uint32_t sequenceLength,
+                                  uint32_t featureChannelCount,
+                                  uint32_t batchSize) -> CppMLCTensor;
 
 
     /*! @abstract   Create a MLCTensor  object
@@ -183,10 +186,11 @@ public:
         @param      randomInitializerType   The random initializer type
         @return     A new MLCTensor object
      */
-//    + (instancetype)tensorWithSequenceLength:(NSUInteger)sequenceLength
-//            featureChannelCount:(NSUInteger)featureChannelCount
-//            batchSize:(NSUInteger)batchSize
-//            randomInitializerType:(MLCRandomInitializerType)randomInitializerType;
+     static
+     auto tensorWithSequenceLength(uint32_t sequenceLength,
+                                   uint32_t featureChannelCount,
+                                   uint32_t batchSize,
+                                   eMLCRandomInitializerType randomInitializerType) -> CppMLCTensor;
 
     /*! @abstract   Create a MLCTensor  object
         @discussion Create a tensor typically used by a recurrent layer
@@ -197,10 +201,11 @@ public:
         @param      data                             The tensor data
         @return     A new MLCTensor object
      */
-//    + (instancetype)tensorWithSequenceLength:(NSUInteger)sequenceLength
-//            featureChannelCount:(NSUInteger)featureChannelCount
-//            batchSize:(NSUInteger)batchSize
-//            data:(MLCTensorData * _Nullable)data;
+     static
+     auto tensorWithSequenceLength(uint32_t sequenceLength,
+                                   uint32_t featureChannelCount,
+                                   uint32_t batchSize,
+                                   CppMLCTensorData& data) -> CppMLCTensor;
 
 
     /*! @abstract   Create a MLCTensor  object
@@ -213,12 +218,12 @@ public:
         @param      randomInitializerType   The random initializer type
         @return     A new MLCTensor object
      */
-//    + (instancetype _Nullable)tensorWithSequenceLengths:(NSArray<NSNumber *> *)sequenceLengths
-//    sortedSequences:(BOOL)sortedSequences
-//            featureChannelCount:(NSUInteger)featureChannelCount
-//            batchSize:(NSUInteger)batchSize
-//            randomInitializerType:(MLCRandomInitializerType)randomInitializerType
-//            NS_REFINED_FOR_SWIFT;
+    static
+    auto tensorWithSequenceLengths(std::vector<uint32_t> const& sequenceLengths,
+                                   bool sortedSequences,
+                                   uint32_t featureChannelCount,
+                                   uint32_t batchSize,
+                                   eMLCRandomInitializerType randomInitializerType) -> CppMLCTensor;
 
     /*! @abstract   Create a MLCTensor  object
         @discussion Create a tensor of variable length sequences typically used by a recurrent layer
@@ -230,12 +235,12 @@ public:
         @param      data                             The tensor data
         @return     A new MLCTensor object
      */
-//    + (instancetype _Nullable)tensorWithSequenceLengths:(NSArray<NSNumber *> *)sequenceLengths
-//    sortedSequences:(BOOL)sortedSequences
-//            featureChannelCount:(NSUInteger)featureChannelCount
-//            batchSize:(NSUInteger)batchSize
-//            data:(MLCTensorData * _Nullable)data
-//            NS_REFINED_FOR_SWIFT;
+    static
+    auto tensorWithSequenceLengths(std::vector<uint32_t> const& sequenceLengths,
+                                   bool sortedSequences,
+                                   uint32_t featureChannelCount,
+                                   uint32_t batchSize,
+                                   CppMLCTensorData& data) -> CppMLCTensor;
 
     /*! @abstract   Returns a Boolean value indicating whether the underlying data has valid floating-point numerics, i.e. it
                     does not contain NaN or INF floating-point values.
@@ -297,7 +302,7 @@ public:
         @param      deviceData  The optimizer device data to be associated with the tensor
         @return     A Boolean value indicating whether the data is successfully associated with the tensor .
     */
-    //bool bindOptimizerData(std::vector<CppMLCTensorData> const& data, std::vector<CppMLCTensorOptimizerDeviceData> const& deviceData) {}
+    bool bindOptimizerData(std::vector<CppMLCTensorData> const& data, std::vector<CppMLCTensorOptimizerDeviceData> const& deviceData);
 
 private:
     CppMLCTensor(void* self);
@@ -313,4 +318,6 @@ private:
     friend CppMLCTypesPrivate;
     friend CppMLCGroupNormalizationLayer;
     friend CppMLCLossLayer;
+    friend CppMLCLayerNormalizationLayer;
+    friend CppMLCTrainingGraph;
 };

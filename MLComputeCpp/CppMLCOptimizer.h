@@ -2,6 +2,8 @@
 
 #import "CppMLCTypes.h"
 
+class CppMLCTrainingGraph;
+
 /*! @class      MLCOptimizer
     @discussion The MLCOptimizer specifies a base optimizer.
  */
@@ -50,4 +52,5 @@ protected:
 
 protected:
     void* self;
+    friend CppMLCTrainingGraph;
 };

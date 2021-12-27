@@ -79,6 +79,10 @@ public:
                                uint32_t batchSize,
                                eMLCExecutionOptions options,
                                CppMLCGraphCompletionHandler completionHandler);
+    bool executeWithInputsData(std::map<std::string, CppMLCTensorData*> const& inputsData,
+                               uint32_t batchSize,
+                               eMLCExecutionOptions options,
+                               CppMLCGraphCompletionHandler completionHandler);
 
     /*! @abstract   Execute the inference graph with given input data
         @discussion Execute the inference graph given input data.
@@ -139,7 +143,7 @@ public:
                                CppMLCGraphCompletionHandler completionHandler);
 
 private:
-    CppMLCInferenceGraph(void* self);
+    CppMLCInferenceGraph(void* self = nullptr);
 
 private:
     void* self;

@@ -2,9 +2,12 @@
 
 #import <MLCompute/MLCTensorData.h>
 
+#import <iostream>
+
 CppMLCTensorData::CppMLCTensorData(void* mlcTensorData)
   : self{(MLCTensorData*)mlcTensorData}
 {
+    [(id)self retain];
 }
 
 CppMLCTensorData::CppMLCTensorData(void* bytes, uint64_t length)
@@ -17,12 +20,18 @@ CppMLCTensorData::CppMLCTensorData(void const* bytes, uint64_t length)
 {
 }
 
-auto CppMLCTensorData::getBytes() -> void*
+auto CppMLCTensorData::getBytes() const -> void const*
 {
     return ((MLCTensorData*)self).bytes;
 }
 
-auto CppMLCTensorData::getLength() -> uint64_t
+auto CppMLCTensorData::getLength() const -> uint64_t
 {
     return ((MLCTensorData*)self).length;
+}
+
+std::ostream& operator<<(std::ostream& out, CppMLCTensorData const& tensorData)
+{
+    out << "CppMLCTensorData: {\n" << "length: " << tensorData.getLength();
+    return out;
 }

@@ -50,6 +50,9 @@ public:
 protected:
     CppMLCLayer(void* self);
 
+public:
+    ~CppMLCLayer();
+
 protected:
     void* self;
     friend CppMLCTypesPrivate;

@@ -251,6 +251,7 @@ public:
                                                               std::vector<uint32_t> dilationRates,
                                                               eMLCPaddingPolicy paddingPolicy,
                                                               std::vector<uint32_t> paddingSizes) -> CppMLCConvolutionDescriptor;
+    ~CppMLCConvolutionDescriptor();
 private:
     CppMLCConvolutionDescriptor(void* self);
 

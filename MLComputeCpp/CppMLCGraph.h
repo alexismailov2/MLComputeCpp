@@ -1,7 +1,6 @@
 #pragma once
 
 #include "CppMLCDevice.h"
-#include "CppMLCTypesPrivate.h"
 #include "CppMLCTensorData.h"
 
 #include <vector>
@@ -50,6 +49,8 @@ public:
      */
     auto nodeWithLayer(CppMLCLayer const& layer,
                        std::vector<CppMLCTensor> const& sources) -> CppMLCTensor;
+    auto nodeWithLayerPtr(CppMLCLayer const& layer,
+                          std::vector<CppMLCTensor*> const& sources) -> CppMLCTensor;
 
     /*! @abstract   Add a layer to the graph
         @param      layer                       The layer
@@ -172,8 +173,10 @@ public:
      */
     auto resultTensorsForLayer(CppMLCLayer const& layer) -> std::vector<CppMLCTensor>;
 
-protected:
+public: // TODO: temporary hack
     CppMLCGraph(void* self);
+    //CppMLCGraph();
+    ~CppMLCGraph();
 
 protected:
     void* self;

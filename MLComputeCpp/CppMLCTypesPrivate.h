@@ -69,9 +69,11 @@ public:
     static auto MLCLayerArrayToVector(NSArray<MLCLayer*>* array) -> std::vector<CppMLCLayer>;
 
     static auto toNSArray(std::vector<CppMLCTensor> const& vector) -> NSArray<MLCTensor*>*;
+    static auto toNSArray(std::vector<CppMLCTensor*> const& vector) -> NSArray<MLCTensor*>*;
     static auto MLCTensorArrayToVector(NSArray<MLCTensor*>* array) -> std::vector<CppMLCTensor>;
 
     static auto toNSArray(std::vector<CppMLCTensorData> const& vector) -> NSArray<MLCTensorData*>*;
+    static auto toNSArray(std::vector<CppMLCTensorData*> const& vector) -> NSArray<MLCTensorData*>*;
     static auto MLCTensorDataArrayToVector(NSArray<MLCTensorData*>* array) -> std::vector<CppMLCTensorData>;
 
     static auto toNSArray(std::vector<CppMLCTensorOptimizerDeviceData> const& vector) -> NSArray<MLCTensorOptimizerDeviceData*>*;
@@ -84,6 +86,8 @@ public:
     static auto MLCGraphToVector(NSArray<MLCGraph*>* array) -> std::vector<CppMLCGraph>;
 
     static auto toNSDictionary(std::map<std::string, CppMLCTensorData> const& tensorDataDisctionary) -> NSDictionary<NSString*, MLCTensorData*>*;
+    static auto toNSDictionary(std::map<std::string, CppMLCTensorData*> const& dictionary) -> NSDictionary<NSString*, MLCTensorData*>*;
+
     static auto toNSDictionary(std::map<std::string, CppMLCTensor> const& tensorDisctionary) -> NSDictionary<NSString*, MLCTensor*>*;
 
     static auto toNSArray(std::vector<CppMLCInferenceGraph> const& vector) -> NSArray<MLCInferenceGraph*>*;

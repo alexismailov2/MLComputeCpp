@@ -48,4 +48,10 @@ CppMLCActivationDescriptor::descriptorWithType(eMLCActivationType activationType
 CppMLCActivationDescriptor::CppMLCActivationDescriptor(void *self)
     : self{self}
 {
+    [(id)self retain];
+}
+
+CppMLCActivationDescriptor::~CppMLCActivationDescriptor()
+{
+    //[(id)self release];
 }

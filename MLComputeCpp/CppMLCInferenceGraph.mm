@@ -1,5 +1,8 @@
 #include "CppMLCInferenceGraph.h"
 
+#include "CppMLCTypesPrivate.h"
+#import "CppMLCTensor.h"
+
 #import <MLCompute/MLCDevice.h>
 #import <MLCompute/MLCGraph.h>
 #import <MLCompute/MLCInferenceGraph.h>
@@ -38,19 +41,37 @@ bool CppMLCInferenceGraph::linkWithGraphs(std::vector<CppMLCInferenceGraph> cons
     return [(MLCInferenceGraph*)self linkWithGraphs:CppMLCTypesPrivate::toNSArray(graphs)] == YES;
 }
 
-// TODO: Hack for compilation
-void HandlerCb(MLCTensor __autoreleasing * _Nullable resultTensor, NSError * _Nullable error, NSTimeInterval executionTime) {
-
+bool CppMLCInferenceGraph::executeWithInputsData(std::map<std::string, CppMLCTensorData> const& inputsData,
+                                                 uint32_t batchSize,
+                                                 eMLCExecutionOptions options,
+                                                 CppMLCGraphCompletionHandler completionHandler) {
+    auto inputsData_ = CppMLCTypesPrivate::toNSDictionary(inputsData);
+    return [(MLCInferenceGraph *) self executeWithInputsData:inputsData_
+                                                   batchSize:(NSUInteger) batchSize
+                                                     options:toNative(options)
+                                           completionHandler:^(MLCTensor __autoreleasing * _Nullable resultTensor,
+                                                               NSError * _Nullable error,
+                                                               NSTimeInterval executionTime) {
+        completionHandler(CppMLCTensor{resultTensor},
+                          std::string(error != nil ? [[error localizedDescription] UTF8String] : ""),
+                          std::string([[NSString stringWithFormat:@"%f", executionTime] UTF8String]));
+    }] == YES;
 }
 
-bool CppMLCInferenceGraph::executeWithInputsData(std::map<std::string, CppMLCTensorData> const& inputsData,
+bool CppMLCInferenceGraph::executeWithInputsData(std::map<std::string, CppMLCTensorData*> const& inputsData,
                                                  uint32_t batchSize,
                                                  eMLCExecutionOptions options,
                                                  CppMLCGraphCompletionHandler completionHandler) {
     return [(MLCInferenceGraph *) self executeWithInputsData:CppMLCTypesPrivate::toNSDictionary(inputsData)
-                                                   batchSize:(NSUInteger) batchSize
+                                                   batchSize:(NSUInteger)batchSize
                                                      options:toNative(options)
-                                           completionHandler:(MLCGraphCompletionHandler)HandlerCb] == YES;
+                                           completionHandler:^(MLCTensor __autoreleasing * _Nullable resultTensor,
+                                                               NSError * _Nullable error,
+                                                               NSTimeInterval executionTime){
+        completionHandler(CppMLCTensor{resultTensor},
+                          std::string(error != nil ? [[error localizedDescription] UTF8String] : ""),
+                          std::string([[NSString stringWithFormat:@"%f", executionTime] UTF8String]));
+    }] == YES;
 }
 
 bool CppMLCInferenceGraph::executeWithInputsData(std::map<std::string, CppMLCTensorData> const& inputsData,
@@ -62,7 +83,13 @@ bool CppMLCInferenceGraph::executeWithInputsData(std::map<std::string, CppMLCTen
                                                outputsData:CppMLCTypesPrivate::toNSDictionary(outputsData)
                                                  batchSize:(NSUInteger)batchSize
                                                    options:toNative(options)
-                                         completionHandler:(MLCGraphCompletionHandler)HandlerCb] == YES;
+                                         completionHandler:^(MLCTensor __autoreleasing * _Nullable resultTensor,
+                                                             NSError * _Nullable error,
+                                                             NSTimeInterval executionTime){
+        completionHandler(CppMLCTensor{resultTensor},
+                          std::string(error != nil ? [[error localizedDescription] UTF8String] : ""),
+                          std::string([[NSString stringWithFormat:@"%f", executionTime] UTF8String]));
+    }] == YES;
 }
 
 bool CppMLCInferenceGraph::executeWithInputsData(std::map<std::string, CppMLCTensorData> const& inputsData,
@@ -76,7 +103,13 @@ bool CppMLCInferenceGraph::executeWithInputsData(std::map<std::string, CppMLCTen
                                       lossLabelWeightsData:CppMLCTypesPrivate::toNSDictionary(lossLabelWeightsData)
                                                  batchSize:(NSUInteger)batchSize
                                                    options:toNative(options)
-                                         completionHandler:(MLCGraphCompletionHandler)HandlerCb] == YES;
+                                         completionHandler:^(MLCTensor __autoreleasing * _Nullable resultTensor,
+                                                             NSError * _Nullable error,
+                                                             NSTimeInterval executionTime){
+        completionHandler(CppMLCTensor{resultTensor},
+                          std::string(error != nil ? [[error localizedDescription] UTF8String] : ""),
+                          std::string([[NSString stringWithFormat:@"%f", executionTime] UTF8String]));
+    }] == YES;
 }
 
 bool CppMLCInferenceGraph::executeWithInputsData(std::map<std::string, CppMLCTensorData> const& inputsData,
@@ -92,7 +125,13 @@ bool CppMLCInferenceGraph::executeWithInputsData(std::map<std::string, CppMLCTen
                                                outputsData:CppMLCTypesPrivate::toNSDictionary(outputsData)
                                                  batchSize:(NSUInteger)batchSize
                                                    options:toNative(options)
-                                         completionHandler:(MLCGraphCompletionHandler)HandlerCb] == YES;
+                                         completionHandler:^(MLCTensor __autoreleasing * _Nullable resultTensor,
+                                                             NSError * _Nullable error,
+                                                             NSTimeInterval executionTime){
+        completionHandler(CppMLCTensor{resultTensor},
+                          std::string(error != nil ? [[error localizedDescription] UTF8String] : ""),
+                          std::string([[NSString stringWithFormat:@"%f", executionTime] UTF8String]));
+    }] == YES;
 }
 
 CppMLCInferenceGraph::CppMLCInferenceGraph(void *self)

@@ -23,13 +23,15 @@ public:
         @param      lossDescriptor          The loss descriptor
         @return     A new loss layer.
      */
-    auto layerWithDescriptor(CppMLCLossDescriptor& lossDescriptor) -> CppMLCLossLayer;
+    static
+    auto layerWithDescriptor(CppMLCLossDescriptor const& lossDescriptor) -> CppMLCLossLayer;
 
     /*! @abstract   Create a MLComputeLoss layer
         @param      lossDescriptor          The loss descriptor
         @param      weights                          The loss label weights tensor
         @return     A new loss layer.
      */
+    static
     auto layerWithDescriptor(CppMLCLossDescriptor& lossDescriptor, CppMLCTensor& weights) -> CppMLCLossLayer;
 
     /*! @abstract   Create a loss layer
@@ -39,6 +41,7 @@ public:
         @param      weight                      A scalar floating point value
         @return     A new softmax cross entropy loss layer.
      */
+    static
     auto softmaxCrossEntropyLossWithReductionType(eMLCReductionType reductionType,
                                                   float labelSmoothing,
                                                   uint32_t classCount,
@@ -51,6 +54,7 @@ public:
         @param      weights                        The loss label weights tensor
         @return     A new softmax cross entropy loss layer.
      */
+    static
     auto softmaxCrossEntropyLossWithReductionType(eMLCReductionType reductionType,
                                                   float labelSmoothing,
                                                   uint32_t classCount,
@@ -63,6 +67,7 @@ public:
         @param      weight                       A scalar floating point value
         @return     A new categorical cross entropy loss layer.
      */
+    static
     auto categoricalCrossEntropyLossWithReductionType(eMLCReductionType reductionType,
                                                       float labelSmoothing,
                                                       uint32_t classCount,
@@ -75,6 +80,7 @@ public:
         @param      weights                        The loss label weights tensor
         @return     A new categorical cross entropy loss layer.
      */
+    static
     auto categoricalCrossEntropyLossWithReductionType(eMLCReductionType reductionType,
                                                       float labelSmoothing,
                                                       uint32_t classCount,
@@ -86,6 +92,7 @@ public:
         @param      weight                         A scalar floating-point value
         @return     A new sigmoid cross entropy loss layer.
      */
+    static
     auto sigmoidCrossEntropyLossWithReductionType(eMLCReductionType reductionType,
                                                   float labelSmoothing,
                                                   float weight) -> CppMLCLossLayer;
@@ -96,6 +103,7 @@ public:
         @param      weights                       The loss label weights tensor
         @return     A new sigmoid cross entropy loss layer.
      */
+    static
     auto sigmoidCrossEntropyLossWithReductionType(eMLCReductionType reductionType,
                                                   float labelSmoothing,
                                                   CppMLCTensor& weights) -> CppMLCLossLayer;
@@ -106,6 +114,7 @@ public:
         @param      weight                         A scalar floating-point value
         @return     A new log loss layer.
      */
+    static
     auto logLossWithReductionType(eMLCReductionType reductionType,
                                   float epsilon,
                                   float weight) -> CppMLCLossLayer;
@@ -116,6 +125,7 @@ public:
         @param      weights                       The loss label weights tensor
         @return     A new log loss layer.
      */
+    static
     auto logLossWithReductionType(eMLCReductionType reductionType,
                                   float epsilon,
                                   CppMLCTensor& weights) -> CppMLCLossLayer;
@@ -126,6 +136,7 @@ public:
         @param      weight                         A scalar floating-point value
         @return     A new huber loss layer.
      */
+    static
     auto huberLossWithReductionType(eMLCReductionType reductionType,
                                     float delta,
                                     float weight) -> CppMLCLossLayer;
@@ -136,6 +147,7 @@ public:
         @param      weights                        The loss label weights tensor
         @return     A new huber loss layer.
      */
+    static
     auto huberLossWithReductionType(eMLCReductionType reductionType,
                                     float delta,
                                     CppMLCTensor& weights) -> CppMLCLossLayer;
@@ -145,6 +157,7 @@ public:
         @param      weight                         A scalar floating-point value
         @return     A new L1 i.e. mean absolute error loss layer.
      */
+    static
     auto meanAbsoluteErrorLossWithReductionType(eMLCReductionType reductionType,
                                                 float weight) -> CppMLCLossLayer;
 
@@ -153,6 +166,7 @@ public:
         @param      weights                       The loss label weights tensor
         @return     A new L1 i.e. mean absolute error loss layer.
      */
+    static
     auto meanAbsoluteErrorLossWithReductionType(eMLCReductionType reductionType,
                                                 CppMLCTensor& weights) -> CppMLCLossLayer;
 
@@ -162,6 +176,7 @@ public:
         @param      weight                         A scalar floating-point value
         @return     A new L2 i.e. mean squared error loss layer.
      */
+    static
     auto meanSquaredErrorLossWithReductionType(eMLCReductionType reductionType,
                                                float weight) -> CppMLCLossLayer;
 
@@ -170,6 +185,7 @@ public:
         @param      weights                       The loss label weights tensor
         @return     A new L2 i.e. mean squared error loss layer.
      */
+    static
     auto meanSquaredErrorLossWithReductionType(eMLCReductionType reductionType,
                                                CppMLCTensor& weights) -> CppMLCLossLayer;
 
@@ -178,6 +194,7 @@ public:
         @param      weight                         A scalar floating-point value
         @return     A new hinge loss layer.
      */
+    static
     auto hingeLossWithReductionType(eMLCReductionType reductionType,
                                     float weight) -> CppMLCLossLayer;
 
@@ -186,6 +203,7 @@ public:
         @param      weights                       The loss label weights tensor
         @return     A new hinge loss layer.
      */
+    static
     auto hingeLossWithReductionType(eMLCReductionType reductionType,
                                     CppMLCTensor& weights) -> CppMLCLossLayer;
 
@@ -194,6 +212,7 @@ public:
         @param      weight                         A scalar floating-point value
         @return     A new cosine distance loss layer.
      */
+    static
     auto cosineDistanceLossWithReductionType(eMLCReductionType reductionType,
                                              float weight) -> CppMLCLossLayer;
 
@@ -202,6 +221,7 @@ public:
         @param      weights                       The loss label weights tensor
         @return     A new cosine distance loss layer.
      */
+    static
     auto cosineDistanceLossWithReductionType(eMLCReductionType reductionType,
                                              CppMLCTensor& weights) -> CppMLCLossLayer;
 

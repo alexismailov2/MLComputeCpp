@@ -53,7 +53,10 @@ public:
      */
     //static CppMLCDevice deviceWithGPUDevices((NSArray<id<MTLDevice>>* gpus) {};
 private:
-    CppMLCDevice(void* self);
+    CppMLCDevice(void* self = nullptr);
+
+public:
+    ~CppMLCDevice();
 
 private:
     void* self;

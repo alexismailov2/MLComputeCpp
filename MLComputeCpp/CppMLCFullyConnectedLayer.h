@@ -48,9 +48,10 @@ public:
                                  CppMLCTensor const& biases,
                                  CppMLCConvolutionDescriptor const& descriptor) -> CppMLCFullyConnectedLayer;
 
+    ~CppMLCFullyConnectedLayer();
 private:
     CppMLCFullyConnectedLayer(void* self);
 
 private:
-    void* self;
+    //void* self;
 };

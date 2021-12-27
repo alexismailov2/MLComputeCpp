@@ -11,6 +11,8 @@ class CppMLCActivationLayer : public CppMLCLayer
 public:
     CppMLCActivationLayer(void* self);
 
+    ~CppMLCActivationLayer();
+
     /*! @property   descriptor
         @abstract   The activation descriptor
      */

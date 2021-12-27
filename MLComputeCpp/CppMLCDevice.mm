@@ -31,6 +31,13 @@ CppMLCDevice CppMLCDevice::deviceWithType(eMLCDeviceType type, bool selectsMulti
 }
 
 CppMLCDevice::CppMLCDevice(void* self)
-        : self{self}
+    : self{self}
 {
+    [(id)self retain];
 }
+
+CppMLCDevice::~CppMLCDevice()
+{
+
+}
+

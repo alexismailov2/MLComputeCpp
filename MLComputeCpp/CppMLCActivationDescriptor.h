@@ -137,6 +137,9 @@ public:
 private:
     CppMLCActivationDescriptor(void* self);
 
+public:
+    ~CppMLCActivationDescriptor();
+
 private:
     void* self;
 

@@ -4,28 +4,38 @@
 
 #include <MLCompute/MLCFullyConnectedLayer.h>
 
-auto CppMLCFullyConnectedLayer::descriptor() -> CppMLCConvolutionDescriptor {
-    return CppMLCConvolutionDescriptor{((MLCFullyConnectedLayer*)self).descriptor};
+auto CppMLCFullyConnectedLayer::descriptor() -> CppMLCConvolutionDescriptor
+{
+    return CppMLCConvolutionDescriptor{((MLCFullyConnectedLayer*)getSelf()).descriptor};
 }
 
-auto CppMLCFullyConnectedLayer::weights() -> CppMLCTensor {
-    return CppMLCTensor{((MLCFullyConnectedLayer*)self).weights};
+auto CppMLCFullyConnectedLayer::weights() -> CppMLCTensor
+{
+    return CppMLCTensor{((MLCFullyConnectedLayer*)getSelf()).weights};
 }
 
-auto CppMLCFullyConnectedLayer::biases() -> CppMLCTensor {
-    return CppMLCTensor{((MLCFullyConnectedLayer*)self).biases};
+auto CppMLCFullyConnectedLayer::biases() -> CppMLCTensor
+{
+    return CppMLCTensor{((MLCFullyConnectedLayer*)getSelf()).biases};
 }
 
-auto CppMLCFullyConnectedLayer::weightsParameter() -> CppMLCTensorParameter {
-    return CppMLCTensorParameter{((MLCFullyConnectedLayer*)self).weightsParameter};
+auto CppMLCFullyConnectedLayer::weightsParameter() -> CppMLCTensorParameter
+{
+    return CppMLCTensorParameter{((MLCFullyConnectedLayer*)getSelf()).weightsParameter};
 }
 
-auto CppMLCFullyConnectedLayer::biasesParameter() -> CppMLCTensorParameter {
-    return CppMLCTensorParameter{((MLCFullyConnectedLayer*)self).biasesParameter};
+auto CppMLCFullyConnectedLayer::biasesParameter() -> CppMLCTensorParameter
+{
+    return CppMLCTensorParameter{((MLCFullyConnectedLayer*)getSelf()).biasesParameter};
 }
 
-auto CppMLCFullyConnectedLayer::layerWithWeights(const CppMLCTensor &weights, const CppMLCTensor &biases,
-                                                 const CppMLCConvolutionDescriptor &descriptor) -> CppMLCFullyConnectedLayer {
+auto CppMLCFullyConnectedLayer::layerWithWeights(CppMLCTensor const& weights,
+                                                 CppMLCTensor const& biases,
+                                                 CppMLCConvolutionDescriptor const& descriptor) -> CppMLCFullyConnectedLayer
+{
+    [(id)weights.self retain];
+    [(id)biases.self retain];
+    [(id)descriptor.self retain];
     return CppMLCFullyConnectedLayer{[MLCFullyConnectedLayer layerWithWeights:(MLCTensor*)weights.self
                                                                        biases:(MLCTensor*)biases.self
                                                                    descriptor:(MLCConvolutionDescriptor*)descriptor.self]};
@@ -33,6 +43,12 @@ auto CppMLCFullyConnectedLayer::layerWithWeights(const CppMLCTensor &weights, co
 
 CppMLCFullyConnectedLayer::CppMLCFullyConnectedLayer(void *self)
     : CppMLCLayer(self)
-    , self{self}
+    //, self{self}
 {
+    //[(id)self retain];
+}
+
+CppMLCFullyConnectedLayer::~CppMLCFullyConnectedLayer()
+{
+    //[(id)self release];
 }

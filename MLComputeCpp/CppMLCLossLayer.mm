@@ -15,7 +15,7 @@ auto CppMLCLossLayer::weights() -> CppMLCTensor
     return CppMLCTensor{((MLCLossLayer*)self).weights};
 }
 
-auto CppMLCLossLayer::layerWithDescriptor(CppMLCLossDescriptor& lossDescriptor) -> CppMLCLossLayer
+auto CppMLCLossLayer::layerWithDescriptor(CppMLCLossDescriptor const& lossDescriptor) -> CppMLCLossLayer
 {
     return CppMLCLossLayer{[MLCLossLayer layerWithDescriptor:(MLCLossDescriptor*)lossDescriptor.self]};
 }

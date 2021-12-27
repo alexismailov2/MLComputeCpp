@@ -55,6 +55,7 @@ public:
         @param      reductionType   The reduction operation
         @return     A new MLCLossDescriptor object
      */
+    static
     auto descriptorWithType(eMLCLossType lossType,
                             eMLCReductionType reductionType) -> CppMLCLossDescriptor;
 
@@ -64,6 +65,7 @@ public:
         @param      weight          The scale factor to apply to each element of a result.
         @return     A new MLCLossDescriptor object
      */
+    static
     auto descriptorWithType(eMLCLossType lossType,
                             eMLCReductionType reductionType,
                             float weight) -> CppMLCLossDescriptor;
@@ -76,6 +78,7 @@ public:
         @param      classCount         The number of classes parameter.
         @return     A new MLCLossDescriptor object
      */
+    static
     auto descriptorWithType(eMLCLossType lossType,
                             eMLCReductionType reductionType,
                             float weight,
@@ -92,6 +95,7 @@ public:
      @param      delta               The delta parameter used by Huber loss
      @return     A new MLCLossDescriptor object
      */
+    static
     auto descriptorWithType(eMLCLossType lossType,
                             eMLCReductionType reductionType,
                             float weight,

@@ -23,6 +23,7 @@ public:
         @param      operation  The softmax operation
         @return     A new softmax layer
      */
+    static
     auto layerWithOperation(eMLCSoftmaxOperation operation) -> CppMLCSoftmaxLayer;;
 
     /*! @abstract   Create a softmax layer
@@ -30,6 +31,7 @@ public:
         @param      dimension  The  dimension over which softmax operation should be performed
         @return     A new softmax layer
      */
+    static
     auto layerWithOperation(eMLCSoftmaxOperation operation, uint64_t dimension) -> CppMLCSoftmaxLayer;
 
 private:

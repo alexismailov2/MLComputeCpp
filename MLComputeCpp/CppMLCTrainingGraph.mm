@@ -13,6 +13,21 @@
 #import <MLCompute/MLCOptimizer.h>
 #import <MLCompute/MLCLayer.h>
 #import <MLCompute/MLCOptimizer.h>
+#import <MLCompute/MLCTypes.h>
+
+namespace {
+    MLCGraphCompletionHandler g_completionHandler = nullptr;
+
+    auto formattedDuration(NSTimeInterval interval) -> std::string {
+        NSDateComponentsFormatter *formatter = [[NSDateComponentsFormatter alloc] init];
+        formatter.allowedUnits = NSCalendarUnitHour | NSCalendarUnitMinute;
+        formatter.zeroFormattingBehavior = NSDateComponentsFormatterZeroFormattingBehaviorPad;
+        NSString *string = [formatter stringFromTimeInterval:interval];
+        NSLog(@"%@", string);
+        // output: 0:20:34
+        return [string UTF8String];
+    }
+} /// end namespace anonymous
 
 auto CppMLCTrainingGraph::optimizer() -> CppMLCOptimizer
 {
@@ -25,8 +40,8 @@ auto CppMLCTrainingGraph::deviceMemorySize() -> uint32_t
 }
 
 auto CppMLCTrainingGraph::graphWithGraphObjects(std::vector<CppMLCGraph> const& graphObjects,
-                                                CppMLCLayer& lossLayer,
-                                                CppMLCOptimizer& optimizer) -> CppMLCTrainingGraph
+                                                CppMLCLayer const& lossLayer,
+                                                CppMLCOptimizer const& optimizer) -> CppMLCTrainingGraph
 {
     return CppMLCTrainingGraph{[MLCTrainingGraph graphWithGraphObjects:CppMLCTypesPrivate::toNSArray(graphObjects)
                                                              lossLayer:(MLCLayer*)lossLayer.self
@@ -107,14 +122,22 @@ bool CppMLCTrainingGraph::executeWithInputsData(std::map<std::string, CppMLCTens
                                                 std::map<std::string, CppMLCTensorData> const& lossLabelWeightsData,
                                                 uint32_t batchSize,
                                                 eMLCExecutionOptions options,
-                                                MLCGraphCompletionHandler completionHandler)
+                                                CppMLCGraphCompletionHandler completionHandler)
 {
+    g_completionHandler = [=](MLCTensor __autoreleasing *_Nullable resultTensor,
+                             NSError *_Nullable error,
+                             NSTimeInterval executionTime) {
+        if (completionHandler)
+        {
+            completionHandler(CppMLCTensor{resultTensor}, "", "");
+        }
+    };
     return [(MLCTrainingGraph*)self executeWithInputsData:CppMLCTypesPrivate::toNSDictionary(inputsData)
                                            lossLabelsData:CppMLCTypesPrivate::toNSDictionary(lossLabelsData)
                                      lossLabelWeightsData:CppMLCTypesPrivate::toNSDictionary(lossLabelWeightsData)
                                                 batchSize:(NSUInteger)batchSize
                                                   options:toNative(options)
-                                        completionHandler:completionHandler] == YES;
+                                        completionHandler:g_completionHandler] == YES;
 }
 
 bool CppMLCTrainingGraph::executeWithInputsData(std::map<std::string, CppMLCTensorData> const& inputsData,
@@ -123,64 +146,112 @@ bool CppMLCTrainingGraph::executeWithInputsData(std::map<std::string, CppMLCTens
                                                 std::map<std::string, CppMLCTensorData> const& outputsData,
                                                 uint32_t batchSize,
                                                 eMLCExecutionOptions options,
-                                                MLCGraphCompletionHandler completionHandler)
+                                                CppMLCGraphCompletionHandler completionHandler)
 {
+    g_completionHandler = [=](MLCTensor __autoreleasing *_Nullable resultTensor,
+                              NSError *_Nullable error,
+                              NSTimeInterval executionTime) {
+        if (completionHandler)
+        {
+            completionHandler(CppMLCTensor{resultTensor}, "", "");
+        }
+    };
     return [(MLCTrainingGraph*)self executeWithInputsData:CppMLCTypesPrivate::toNSDictionary(inputsData)
                                            lossLabelsData:CppMLCTypesPrivate::toNSDictionary(lossLabelsData)
                                      lossLabelWeightsData:CppMLCTypesPrivate::toNSDictionary(lossLabelWeightsData)
                                               outputsData:CppMLCTypesPrivate::toNSDictionary(outputsData)
                                                 batchSize:(NSUInteger)batchSize
                                                   options:toNative(options)
-                                        completionHandler:completionHandler] == YES;
+                                        completionHandler:g_completionHandler] == YES;
 }
 
 bool CppMLCTrainingGraph::executeForwardWithBatchSize(uint32_t batchSize,
                                                       eMLCExecutionOptions options,
-                                                      MLCGraphCompletionHandler completionHandler)
+                                                      CppMLCGraphCompletionHandler completionHandler)
 {
+    g_completionHandler = [=](MLCTensor __autoreleasing *_Nullable resultTensor,
+                              NSError *_Nullable error,
+                              NSTimeInterval executionTime) {
+        if (completionHandler)
+        {
+            completionHandler(CppMLCTensor{resultTensor}, "", "");
+        }
+    };
     return [(MLCTrainingGraph*)self executeForwardWithBatchSize:(NSUInteger)batchSize
                                                         options:toNative(options)
-                                               completionHandler:completionHandler] == YES;
+                                               completionHandler:g_completionHandler] == YES;
 
 }
 
 bool CppMLCTrainingGraph::executeForwardWithBatchSize(uint32_t batchSize,
                                                       eMLCExecutionOptions options,
                                                       std::map<std::string, CppMLCTensorData> const& outputsData,
-                                                      MLCGraphCompletionHandler completionHandler)
+                                                      CppMLCGraphCompletionHandler completionHandler)
 {
+    g_completionHandler = [=](MLCTensor __autoreleasing *_Nullable resultTensor,
+                              NSError *_Nullable error,
+                              NSTimeInterval executionTime) {
+        if (completionHandler)
+        {
+            completionHandler(CppMLCTensor{resultTensor}, "", "");
+        }
+    };
     return [(MLCTrainingGraph*)self executeForwardWithBatchSize:(NSUInteger)batchSize
                                                         options:toNative(options)
                                                      outputsData:CppMLCTypesPrivate::toNSDictionary(outputsData)
-                                               completionHandler:completionHandler] == YES;
+                                               completionHandler:g_completionHandler] == YES;
 
 }
 
 bool CppMLCTrainingGraph::executeGradientWithBatchSize(uint32_t batchSize,
                                                        eMLCExecutionOptions options,
-                                                       MLCGraphCompletionHandler completionHandler)
+                                                       CppMLCGraphCompletionHandler completionHandler)
 {
+    g_completionHandler = [=](MLCTensor __autoreleasing *_Nullable resultTensor,
+                              NSError *_Nullable error,
+                              NSTimeInterval executionTime) {
+        if (completionHandler)
+        {
+            completionHandler(CppMLCTensor{resultTensor}, "", "");
+        }
+    };
     return [(MLCTrainingGraph*)self executeGradientWithBatchSize:(NSUInteger)batchSize
                                                          options:toNative(options)
-                                               completionHandler:completionHandler] == YES;
+                                               completionHandler:g_completionHandler] == YES;
 }
 
 bool CppMLCTrainingGraph::executeGradientWithBatchSize(uint32_t batchSize,
                                                        eMLCExecutionOptions options,
                                                        std::map<std::string, CppMLCTensorData> outputsData,
-                                                       MLCGraphCompletionHandler completionHandler)
+                                                       CppMLCGraphCompletionHandler completionHandler)
 {
+    g_completionHandler = [=](MLCTensor __autoreleasing *_Nullable resultTensor,
+                              NSError *_Nullable error,
+                              NSTimeInterval executionTime) {
+        if (completionHandler)
+        {
+            completionHandler(CppMLCTensor{resultTensor}, "", "");
+        }
+    };
     return [(MLCTrainingGraph*)self executeGradientWithBatchSize:(NSUInteger)batchSize
                                                          options:toNative(options)
                                                      outputsData:CppMLCTypesPrivate::toNSDictionary(outputsData)
-                                                    completionHandler:completionHandler] == YES;
+                                                    completionHandler:g_completionHandler] == YES;
 }
 
 bool CppMLCTrainingGraph::executeOptimizerUpdateWithOptions(eMLCExecutionOptions options,
-                                                            MLCGraphCompletionHandler completionHandler)
+                                                            CppMLCGraphCompletionHandler completionHandler)
 {
+    g_completionHandler = [=](MLCTensor __autoreleasing *_Nullable resultTensor,
+                              NSError *_Nullable error,
+                              NSTimeInterval executionTime) {
+        if (completionHandler)
+        {
+            completionHandler(CppMLCTensor{resultTensor}, "", "");
+        }
+    };
     return [(MLCTrainingGraph*)self executeOptimizerUpdateWithOptions:toNative(options)
-                                                    completionHandler:completionHandler] == YES;
+                                                    completionHandler:g_completionHandler] == YES;
 }
 
 void CppMLCTrainingGraph::synchronizeUpdates()

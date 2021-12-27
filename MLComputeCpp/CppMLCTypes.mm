@@ -10,6 +10,7 @@
 
 #import <MLCompute/MLCLayer.h>
 #import <MLCompute/MLCTensor.h>
+#import <iostream>
 
 auto toNative(eMLCActivationType activationType) -> MLCActivationType {
     switch(activationType) {
@@ -419,9 +420,10 @@ auto MLCPaddingTypeToCpp(MLCPaddingType paddingType) -> eMLCPaddingType
 
 auto CppMLCTypesPrivate::toNSArray(std::vector<uint32_t> const& vector) -> NSArray<NSNumber *> * {
     id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(uint32_t item) {
+    for (auto const& item : vector)
+    {
         [ns addObject:[NSNumber numberWithInteger:(NSInteger)item]];
-    });
+    }
     return ns;
 }
 
@@ -436,9 +438,10 @@ auto CppMLCTypesPrivate::NSNumberArrayToVector(NSArray<NSNumber *> * array) -> s
 
 auto CppMLCTypesPrivate::toNSArray(const std::vector<CppMLCLayer> &vector) -> NSArray<MLCLayer *> * {
     __block id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(CppMLCLayer const& item) {
+    for (auto const& item : vector)
+    {
         [ns addObject:(MLCLayer*)item.self];
-    });
+    }
     return ns;
 }
 
@@ -453,9 +456,21 @@ auto CppMLCTypesPrivate::MLCLayerArrayToVector(NSArray<MLCLayer *> *array) -> st
 
 auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensor> const& vector) -> NSArray<MLCTensor*>* {
     __block id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(CppMLCTensor const& item) {
+    for (auto const& item : vector)
+    {
         [ns addObject:(MLCTensor*)item.self];
-    });
+    }
+    return ns;
+}
+
+auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensor*> const& vector) -> NSArray<MLCTensor*>* {
+    NSMutableArray* ns = [NSMutableArray arrayWithCapacity:(NSUInteger)vector.size()];
+    for (auto const& item : vector)
+    {
+        auto* mlcTensor = (MLCTensor*)item->self;
+        std::cout << "mlcTensor: "<< mlcTensor << std::endl;
+        [ns addObject: mlcTensor];
+    }
     return ns;
 }
 
@@ -469,10 +484,20 @@ auto CppMLCTypesPrivate::MLCTensorArrayToVector(NSArray<MLCTensor*>* array) -> s
 }
 
 auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensorData> const& vector) -> NSArray<MLCTensorData*>* {
-    __block id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(CppMLCTensorData const& item) {
+    NSMutableArray* ns = [NSMutableArray arrayWithCapacity:(NSUInteger)vector.size()];
+    for (auto const& item : vector)
+    {
         [ns addObject:(MLCTensorData*)item.self];
-    });
+    }
+    return ns;
+}
+
+auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensorData*> const& vector) -> NSArray<MLCTensorData*>* {
+    NSMutableArray* ns = [NSMutableArray arrayWithCapacity:(NSUInteger)vector.size()];
+    for (auto const& item : vector)
+    {
+        [ns addObject:(MLCTensorData*)item->self];
+    }
     return ns;
 }
 
@@ -486,10 +511,11 @@ auto CppMLCTypesPrivate::MLCTensorDataArrayToVector(NSArray<MLCTensorData*>* arr
 }
 
 auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensorOptimizerDeviceData> const& vector) -> NSArray<MLCTensorOptimizerDeviceData*>* {
-    __block id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(CppMLCTensorOptimizerDeviceData const& item) {
+    NSMutableArray* ns = [NSMutableArray arrayWithCapacity:(NSUInteger)vector.size()];
+    for (auto const& item : vector)
+    {
         [ns addObject:(MLCTensorOptimizerDeviceData*)item.self];
-    });
+    }
     return ns;
 }
 
@@ -503,10 +529,11 @@ auto CppMLCTypesPrivate::MLCTensorOptimizerDeviceDataToVector(NSArray<MLCTensorO
 }
 
 auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTensorParameter> const& vector) -> NSArray<MLCTensorParameter*>* {
-    __block id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(CppMLCTensorParameter const& item) {
+    NSMutableArray* ns = [NSMutableArray arrayWithCapacity:(NSUInteger)vector.size()];
+    for (auto const& item : vector)
+    {
         [ns addObject:(MLCTensorParameter*)item.self];
-    });
+    }
     return ns;
 }
 
@@ -520,10 +547,11 @@ auto CppMLCTypesPrivate::MLCTensorParameterToVector(NSArray<MLCTensorParameter*>
 }
 
 auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCGraph> const& vector) -> NSArray<MLCGraph*>* {
-    __block id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(CppMLCGraph const& item) {
+    NSMutableArray* ns = [NSMutableArray arrayWithCapacity:(NSUInteger)vector.size()];
+    for (auto const& item : vector)
+    {
         [ns addObject:(MLCGraph*)item.self];
-    });
+    }
     return ns;
 }
 
@@ -536,18 +564,30 @@ auto CppMLCTypesPrivate::MLCGraphToVector(NSArray<MLCGraph*>* array) -> std::vec
     return vector;
 }
 
-auto CppMLCTypesPrivate::toNSDictionary(std::map<std::string, CppMLCTensorData> const& ditcionary) -> NSDictionary<NSString *, MLCTensorData *> * {
-    id ns = [NSMutableDictionary new];
-    for (auto const& item : ditcionary) {
+auto CppMLCTypesPrivate::toNSDictionary(std::map<std::string, CppMLCTensorData> const& dictionary) -> NSDictionary<NSString *, MLCTensorData *> * {
+    NSMutableDictionary* ns = [NSMutableDictionary dictionaryWithCapacity:(NSUInteger)dictionary.size()];
+    for (auto const& item : dictionary)
+    {
         [ns setObject:(MLCTensorData*)(item.second.self)
                forKey:[NSString stringWithUTF8String:item.first.c_str()]];
     }
     return ns;
 }
 
-auto CppMLCTypesPrivate::toNSDictionary(std::map<std::string, CppMLCTensor> const& ditcionary) -> NSDictionary<NSString *, MLCTensor *> * {
-    id ns = [NSMutableDictionary new];
-    for (auto const& item : ditcionary) {
+auto CppMLCTypesPrivate::toNSDictionary(std::map<std::string, CppMLCTensorData*> const& dictionary) -> NSDictionary<NSString *, MLCTensorData *> * {
+    NSMutableDictionary* ns = [NSMutableDictionary dictionaryWithCapacity:(NSUInteger)dictionary.size()];
+    for (auto const& item : dictionary)
+    {
+        [ns setObject:(MLCTensorData*)(item.second->self)
+               forKey:[NSString stringWithUTF8String:item.first.c_str()]];
+    }
+    return ns;
+}
+
+auto CppMLCTypesPrivate::toNSDictionary(std::map<std::string, CppMLCTensor> const& dictionary) -> NSDictionary<NSString *, MLCTensor *> * {
+    NSMutableDictionary* ns = [NSMutableDictionary dictionaryWithCapacity:(NSUInteger)dictionary.size()];
+    for (auto const& item : dictionary)
+    {
         [ns setObject:(MLCTensor*)(item.second.self)
                forKey:[NSString stringWithUTF8String:item.first.c_str()]];
     }
@@ -555,18 +595,20 @@ auto CppMLCTypesPrivate::toNSDictionary(std::map<std::string, CppMLCTensor> cons
 }
 
 auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCInferenceGraph> const& vector) -> NSArray<MLCInferenceGraph *> * {
-    __block id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(CppMLCInferenceGraph const& item) {
+    NSMutableArray* ns = [NSMutableArray arrayWithCapacity:(NSUInteger)vector.size()];
+    for (auto const& item : vector)
+    {
         [ns addObject:(MLCInferenceGraph*)item.self];
-    });
+    }
     return ns;
 }
 
 auto CppMLCTypesPrivate::toNSArray(std::vector<CppMLCTrainingGraph> const& vector) -> NSArray<MLCTrainingGraph *> * {
-    __block id ns = [NSMutableArray new];
-    std::for_each(vector.begin(), vector.end(), ^(CppMLCTrainingGraph const& item) {
+    NSMutableArray* ns = [NSMutableArray arrayWithCapacity:(NSUInteger)vector.size()];
+    for (auto const& item : vector)
+    {
         [ns addObject:(MLCTrainingGraph*)item.self];
-    });
+    }
     return ns;
 }
 

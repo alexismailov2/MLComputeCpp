@@ -2,6 +2,8 @@
 
 #import <cstdint>
 
+#include <iostream>
+
 class CppMLCTensor;
 class CppMLCTypesPrivate;
 
@@ -27,12 +29,12 @@ public:
     /*! @property   bytes
         @abstract   Pointer to memory that contains or will be used for tensor data
      */
-    auto getBytes() -> void*;
+    auto getBytes() const -> void const*;
 
     /*! @property   length
         @abstract   The size in bytes of the tensor data
      */
-    auto getLength() -> uint64_t;
+    auto getLength() const -> uint64_t;
 
 private:
     CppMLCTensorData(void* self);
@@ -42,3 +44,5 @@ private:
     friend CppMLCTensor;
     friend CppMLCTypesPrivate;
 };
+
+std::ostream& operator<<(std::ostream&, CppMLCTensorData const& tensorData);

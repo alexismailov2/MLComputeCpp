@@ -61,12 +61,14 @@ CppMLCTensorDescriptor::CppMLCTensorDescriptor(uint32_t width,
 }
 
 CppMLCTensorDescriptor::~CppMLCTensorDescriptor() {
-    [(id)self dealloc];
+    //[(id)self dealloc];
+    //[(id)self release];
 }
 
 CppMLCTensorDescriptor::CppMLCTensorDescriptor(void* tensorDescriptor)
     : self{tensorDescriptor}
 {
+    [(id)self retain];
 }
 
 auto CppMLCTensorDescriptor::getDataType() -> eMLCDataType {

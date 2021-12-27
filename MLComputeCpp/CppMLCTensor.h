@@ -23,14 +23,14 @@ class CppMLCTrainingGraph;
 class CppMLCTensor
 {
 public:
-    auto tensorId() -> uint64_t;
-    auto descriptor() -> CppMLCTensorDescriptor;
-    auto data() -> std::vector<float>;
-    auto label() -> std::string;
-    void label(std::string const& label);
+    auto tensorId() const -> uint64_t;
+    auto descriptor() const -> CppMLCTensorDescriptor;
+    auto data() const -> std::vector<float>;
+    auto label() const -> std::string;
+    void label(std::string const& label) const;
     auto device() -> CppMLCDevice;
-    auto optimizerData() -> std::vector<CppMLCTensorData>;
-    auto optimizerDeviceData() -> std::vector<CppMLCTensorOptimizerDeviceData>;
+    auto optimizerData() const -> std::vector<CppMLCTensorData>;
+    auto optimizerDeviceData() const -> std::vector<CppMLCTensorOptimizerDeviceData>;
 
     /*! @abstract   Create a MLCTensor object
         @discussion Create a tensor object without any data
@@ -38,29 +38,29 @@ public:
      */
     CppMLCTensor(CppMLCTensorDescriptor const& tensorDescriptor);
 
-    /*! @abstract   Create a MLCTensor object
-        @discussion Create a tensor object initialized with a random initializer such as Glorot Uniform.
-        @param      tensorDescriptor              The tensor descriptor
-        @param      randomInitializerType   The random initializer type
-        @return     A new MLCTensor object
-     */
-     CppMLCTensor(CppMLCTensorDescriptor const& tensorDescriptor, eMLCRandomInitializerType randomInitializerType);
+//    /*! @abstract   Create a MLCTensor object
+//        @discussion Create a tensor object initialized with a random initializer such as Glorot Uniform.
+//        @param      tensorDescriptor              The tensor descriptor
+//        @param      randomInitializerType   The random initializer type
+//        @return     A new MLCTensor object
+//     */
+//     CppMLCTensor(CppMLCTensorDescriptor const& tensorDescriptor, eMLCRandomInitializerType randomInitializerType);
 
-    /*! @abstract   Create a MLCTensor object
-        @discussion Create a tensor object with a MLCTensorData object that specifies the tensor data buffer
-        @param      tensorDescriptor              The tensor descriptor
-        @param      fillData                      The scalar data to fill to tensor with
-        @return     A new MLCTensor object
-     */
-    CppMLCTensor(CppMLCTensorDescriptor const& tensorDescriptor, uint32_t fillData);
+//    /*! @abstract   Create a MLCTensor object
+//        @discussion Create a tensor object with a MLCTensorData object that specifies the tensor data buffer
+//        @param      tensorDescriptor              The tensor descriptor
+//        @param      fillData                      The scalar data to fill to tensor with
+//        @return     A new MLCTensor object
+//     */
+//    CppMLCTensor(CppMLCTensorDescriptor const& tensorDescriptor, uint32_t fillData);
 
-    /*! @abstract   Create a MLCTensor object
-        @discussion Create a tensor object with a MLCTensorData object that specifies the tensor data buffer
-        @param      tensorDescriptor              The tensor descriptor
-        @param      data                                         The random initializer type
-        @return     A new MLCTensor object
-     */
-     CppMLCTensor(CppMLCTensorDescriptor const& tensorDescriptor, CppMLCTensorData const& data);
+//    /*! @abstract   Create a MLCTensor object
+//        @discussion Create a tensor object with a MLCTensorData object that specifies the tensor data buffer
+//        @param      tensorDescriptor              The tensor descriptor
+//        @param      data                                         The random initializer type
+//        @return     A new MLCTensor object
+//     */
+//     CppMLCTensor(CppMLCTensorDescriptor const& tensorDescriptor, CppMLCTensorData const& data);
 
     /*! @abstract   Create a MLCTensor object
         @discussion Create a tensor object without any data.  The tensor data type is MLCDataTypeFloat32.
@@ -278,7 +278,7 @@ public:
         @param synchronizeWithDevice  Whether to synchronize device memory if device is GPU
         @return     Returns YES if success, NO if there is a failure to synchronize
      */
-     bool copyDataFromDeviceMemoryToBytes(void* bytes, uint32_t length, bool synchronizeWithDevice);
+     bool copyDataFromDeviceMemoryToBytes(void* bytes, uint32_t length, bool synchronizeWithDevice) const;
 
     /*! @abstract   Associates the given data to the tensor. If the device is GPU, also copies the data to the device memory.
                     Returns true if the data is successfully associated with the tensor and copied to the device.
@@ -304,8 +304,10 @@ public:
     */
     bool bindOptimizerData(std::vector<CppMLCTensorData> const& data, std::vector<CppMLCTensorOptimizerDeviceData> const& deviceData);
 
-private:
-    CppMLCTensor(void* self);
+    ~CppMLCTensor();
+
+public: // TODO: Opened only for completion handler
+    CppMLCTensor(void* self = nullptr);
 
 private:
     void* self;
@@ -321,3 +323,5 @@ private:
     friend CppMLCLayerNormalizationLayer;
     friend CppMLCTrainingGraph;
 };
+
+std::ostream& operator<<(std::ostream& out, CppMLCTensor const&);

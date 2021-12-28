@@ -224,7 +224,7 @@ auto CppMLCConvolutionDescriptor::depthwiseConvolutionDescriptorWithKernelSizes(
 CppMLCConvolutionDescriptor::CppMLCConvolutionDescriptor(void *self)
     : self{self}
 {
-    [(id)self retain];
+    //[(id)self retain];
 }
 
 CppMLCConvolutionDescriptor::~CppMLCConvolutionDescriptor()

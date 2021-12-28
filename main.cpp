@@ -99,7 +99,7 @@ public:
 
     auto oneHotEncoding(uint32_t number, uint32_t length = 10) -> std::vector<float>
     {
-        auto array = std::vector<float>(0.0, length);
+        auto array = std::vector<float>(length, 0.0f);
         array[number] = 1.0;
         return array;
     }
@@ -213,7 +213,7 @@ public:
                         {
                             epochMatch += 1;
                         }
-                        // print("\(i + (batch * batchSize)) -> Prediction: \(prediction) Label: \(label)")
+                        std::cout << (i + (batch * batchSize)) << "-> Prediction: " << prediction << " Label: " << label << std::endl;
                     }
                 });
             }
@@ -313,7 +313,7 @@ public:
 
     auto readDataSet(std::string const& filePath, std::function<void(uint32_t updateStatus)>&& updatingStatusCb) -> std::pair<std::vector<float>, std::vector<float>>
     {
-        auto file = std::ifstream(filePath, std::ios::binary);
+        auto file = std::ifstream(filePath);
 
         auto X = std::vector<float>();
         auto Y = std::vector<float>();
@@ -331,9 +331,34 @@ public:
         {
             for (auto& line : iterationItem)
             {
-//              let sample = line.split(separator: ",").compactMap({Int($0)});
-//                Y.emplace_back(oneHotEncoding(sample[0]));
-//              X.append(contentsOf: sample[1...self.imageSize].map{Float($0) / Float(255.0)});
+                line[1] = '\0';
+                //std::cout << &line[0] << std::endl;
+                auto fullyConnected = oneHotEncoding(std::atoi(&line[0]));
+                Y.insert(Y.cend(), fullyConnected.cbegin(), fullyConnected.cend());
+
+                auto pos = 3;
+                auto pos_prev = 2;
+                do
+                {
+                    line[pos] = '\0';
+                    //std::cout << &line[pos_prev] << std::endl;
+                    X.emplace_back(std::atof(&line[pos_prev])/255.0f);
+//                    std::cout << ((X.back() > 0.0f) ? "**" : "  ");
+//                    if ((X.size() % 28) == 0) {
+//                        std::cout << "\n";
+//                    }
+                    pos_prev = pos + 1;
+                    pos = line.find_first_of(',', pos);
+                } while(pos_prev - 1 != std::string::npos);
+
+//                for (int j = 0; j < 28; ++j)
+//                {
+//                    for(int i = 0; i < 28; ++i)
+//                    {
+//                        std::cout << ((X[j * 28 + i] > 0.0f) ? "**" : "  ");
+//                    }
+//                    std::cout << std::endl;
+//                }
                 updatingStatusCb(++count);
             }
         }
@@ -359,6 +384,7 @@ private:
     CppMLCTensor _dense2;
     CppMLCTensor _outputSoftmax;
     CppMLCTrainingGraph _trainingGraph;
+public:
     std::vector<float> _testDataX;
     std::vector<float> _testDataY;
     std::vector<float> _trainingDataX;
@@ -422,11 +448,13 @@ int main()
         std::cout << std::endl;
     });
 
-#if 0 
+#if 1
     MNISTTrain mnistTrain;
-    mnistTrain.readDataSet("mnist_test.csv",
-                           [](uint32_t progress){
-        std::cout << "progress: " << progress << std::endl;
+    std::tie(mnistTrain._trainingDataX, mnistTrain._trainingDataY) = mnistTrain.readDataSet("mnist_train.csv",[](uint32_t progress){
+        //std::cout << "progress: " << progress << std::endl;
+    });
+    std::tie(mnistTrain._testDataX, mnistTrain._testDataY) = mnistTrain.readDataSet("mnist_test.csv",[](uint32_t progress){
+        //std::cout << "progress: " << progress << std::endl;
     });
     mnistTrain.trainGraph([](auto& str) {
         std::cout << str << std::endl;

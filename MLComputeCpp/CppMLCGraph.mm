@@ -33,8 +33,10 @@ auto CppMLCGraph::summarizedDOTDescription() -> std::string
 auto CppMLCGraph::nodeWithLayer(CppMLCLayer const& layer,
                                 CppMLCTensor const& source) -> CppMLCTensor
 {
-    [(id)source.self retain];
-    [(id)layer.self retain];
+    //[(id)source.self retain];
+    //[(id)layer.self retain];
+    std::cout << layer << std::endl;
+    std::cout << source << std::endl;
     MLCTensor* tensor = [(MLCGraph*)self nodeWithLayer:(MLCLayer*)layer.self
                                                 source:(MLCTensor*)source.self];
     return CppMLCTensor{tensor};

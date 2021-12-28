@@ -310,7 +310,7 @@ bool CppMLCTensor::bindOptimizerData(std::vector<CppMLCTensorData> const& data,
 CppMLCTensor::CppMLCTensor(void *self)
     : self{self}
 {
-    [(id)self retain];
+    //[(id)self retain];
 }
 
 CppMLCTensor::~CppMLCTensor()
@@ -320,44 +320,16 @@ CppMLCTensor::~CppMLCTensor()
 
 std::ostream& operator<<(std::ostream& out, CppMLCTensor const& tensor)
 {
-    out << "tensorId: " << tensor.tensorId() << std::endl;
-    out << "label: " << tensor.label() << std::endl;
+    out << "CppMLCTensor {\n";
+    out << "tensorId: " << tensor.tensorId() << "\n";
+    out << "label: " << tensor.label() << "\n";
     out << "data: ";
     for (auto const& item : tensor.data())
     {
         std::cout << item << " " << std::endl;
     }
-    out << std::endl;
-    auto descriptor = tensor.descriptor();
-    out << "dimensionsCount: " << descriptor.getDimensionsCount() << std::endl;
-    out << "shape: ";
-    for(auto const& item : descriptor.getShape())
-    {
-        out << item << " ";
-    }
-    out << std::endl;
-    out << "stride: ";
-    for(auto const& item : descriptor.getStride())
-    {
-        out << item << " ";
-    }
-    out << std::endl;
-    out << "sequenceLengths: ";
-    for(auto const& item : descriptor.getSequenceLengths())
-    {
-        std::cout << item << " ";
-    }
-    out << std::endl;
-    out << "tensorAllocationSizeInBytes: " << descriptor.getTensorAllocationSizeInBytes() << std::endl;
-    out << "isSortedSequences: " << descriptor.isSortedSequences() << std::endl;
-    out << "batchSizePerSequenceStep: ";
-    for(auto const& item : descriptor.getBatchSizePerSequenceStep())
-    {
-        out << item << " ";
-    }
-    out << std::endl;
-    out << "maxTensorDimensions: " << descriptor.getMaxTensorDimensions() << std::endl;
-    out << "dataType: " << (uint32_t)descriptor.getDataType() << std::endl;
+    out << "\n";
+    out << tensor.descriptor() << "\n}\n";
     return out;
 }
 

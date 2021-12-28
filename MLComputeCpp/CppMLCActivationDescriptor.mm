@@ -21,7 +21,8 @@ auto CppMLCActivationDescriptor::getC() -> float {
 
 CppMLCActivationDescriptor
 CppMLCActivationDescriptor::descriptorWithType(eMLCActivationType activationType) {
-    return CppMLCActivationDescriptor{[MLCActivationDescriptor descriptorWithType:toNative(activationType)]};
+    auto activationDescriptor = [MLCActivationDescriptor descriptorWithType:toNative(activationType)];
+    return CppMLCActivationDescriptor{activationDescriptor};
 }
 
 CppMLCActivationDescriptor
@@ -48,7 +49,7 @@ CppMLCActivationDescriptor::descriptorWithType(eMLCActivationType activationType
 CppMLCActivationDescriptor::CppMLCActivationDescriptor(void *self)
     : self{self}
 {
-    [(id)self retain];
+    //[(id)self retain];
 }
 
 CppMLCActivationDescriptor::~CppMLCActivationDescriptor()

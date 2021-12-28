@@ -23,12 +23,12 @@ public:
         @abstract   The layer ID
         @discussion A unique number to identify each layer.  Assigned when the layer is created.
      */
-    auto getLayerID() -> uint64_t;
+    auto getLayerID() const -> uint64_t;
 
     /*! @property   label
         @abstract   A string to help identify this object.
      */
-    auto getLabel() -> std::string;
+    auto getLabel() const -> std::string;
 
     /*! @property   isDebuggingEnabled
         @abstract   A flag to identify if we want to debug this layer when executing a graph that includes this layer
@@ -36,7 +36,7 @@ public:
                     The default is NO.  If isDebuggingEnabled is set to YES,  make sure to set options to enable debugging when
                     compiling the graph.  Otherwise this property may be ignored.
      */
-    bool isDebuggingEnabled();
+    bool isDebuggingEnabled() const;
 
     /*! @abstract   Determine whether instances of this layer accept source tensors of the given data type on the given device.
         @param      dataType   A data type of a possible input tensor to the layer
@@ -59,3 +59,5 @@ protected:
     friend CppMLCGraph;
     friend CppMLCTrainingGraph;
 };
+
+std::ostream& operator<<(std::ostream&, CppMLCLayer const&);

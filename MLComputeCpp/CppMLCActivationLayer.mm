@@ -7,7 +7,7 @@ CppMLCActivationLayer::CppMLCActivationLayer(void *self)
     : CppMLCLayer{self}
     , self{self}
 {
-    [(id)self retain];
+    //[(id)self retain];
 }
 
 CppMLCActivationLayer::~CppMLCActivationLayer()
@@ -20,8 +20,7 @@ CppMLCActivationDescriptor CppMLCActivationLayer::descriptor() {
 }
 
 CppMLCActivationLayer CppMLCActivationLayer::layerWithDescriptor(CppMLCActivationDescriptor const& descriptor) {
-    [(id)descriptor.self retain];
-    return CppMLCActivationLayer{descriptor.self};
+    return CppMLCActivationLayer{[MLCActivationLayer layerWithDescriptor:(MLCActivationDescriptor*)descriptor.self]};
 }
 
 CppMLCActivationLayer CppMLCActivationLayer::reluLayer() {

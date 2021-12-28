@@ -32,6 +32,6 @@ auto CppMLCTensorData::getLength() const -> uint64_t
 
 std::ostream& operator<<(std::ostream& out, CppMLCTensorData const& tensorData)
 {
-    out << "CppMLCTensorData: {\n" << "length: " << tensorData.getLength();
+    out << "CppMLCTensorData {\n" << "length: " << tensorData.getLength() << "\n}\n";
     return out;
 }

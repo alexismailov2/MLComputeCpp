@@ -1,5 +1,4 @@
-#ifndef MLC_EXAMPLE_CPPMLCTENSORDESCRIPTOR_H
-#define MLC_EXAMPLE_CPPMLCTENSORDESCRIPTOR_H
+#pragma once
 
 #include "CppMLCTypes.h"
 
@@ -19,23 +18,23 @@ public:
     CppMLCTensorDescriptor(uint32_t width, uint32_t height, uint32_t featureChannels, uint32_t batchSize);
     ~CppMLCTensorDescriptor();
 
-    auto getDataType() -> eMLCDataType;
-    auto getDimensionsCount() -> uint32_t;
-    auto getShape() -> std::vector<uint32_t>;
-    auto getStride() -> std::vector<uint32_t>;
-    auto getTensorAllocationSizeInBytes() -> uint64_t;
-    auto getSequenceLengths() -> std::vector<uint32_t>;
-    bool isSortedSequences();
-    auto getBatchSizePerSequenceStep() -> std::vector<uint32_t>;
-    auto getMaxTensorDimensions() -> uint64_t;
+    auto getDataType() const -> eMLCDataType;
+    auto getDimensionsCount() const -> uint32_t;
+    auto getShape() const -> std::vector<uint32_t>;
+    auto getStride() const -> std::vector<uint32_t>;
+    auto getTensorAllocationSizeInBytes() const -> uint64_t;
+    auto getSequenceLengths() const -> std::vector<uint32_t>;
+    bool isSortedSequences() const;
+    auto getBatchSizePerSequenceStep() const -> std::vector<uint32_t>;
+    auto getMaxTensorDimensions() const -> uint64_t;
 
 private:
     CppMLCTensorDescriptor(void* tensorDescriptor);
 
-public://
+public:
     void* self{};
 
     friend CppMLCTensor;
 };
 
-#endif //MLC_EXAMPLE_CPPMLCTENSORDESCRIPTOR_H
+std::ostream& operator<<(std::ostream& out, CppMLCTensorDescriptor const&);

@@ -3,6 +3,8 @@
 
 #import <MLCompute/MLCTensorDescriptor.h>
 
+#include <iostream>
+
 //auto
 //CppMLCTensorDescriptor::ConvolutionWeightsDescriptor(uint32_t width,
 //                                                     uint32_t height,
@@ -71,15 +73,15 @@ CppMLCTensorDescriptor::CppMLCTensorDescriptor(void* tensorDescriptor)
     [(id)self retain];
 }
 
-auto CppMLCTensorDescriptor::getDataType() -> eMLCDataType {
+auto CppMLCTensorDescriptor::getDataType() const -> eMLCDataType {
     return MLCDataTypeToCpp(((MLCTensorDescriptor*)self).dataType);
 }
 
-auto CppMLCTensorDescriptor::getDimensionsCount() -> uint32_t {
+auto CppMLCTensorDescriptor::getDimensionsCount() const -> uint32_t {
     return (uint32_t)(((MLCTensorDescriptor*)self).dimensionCount);
 }
 
-auto CppMLCTensorDescriptor::getShape() -> std::vector<uint32_t> {
+auto CppMLCTensorDescriptor::getShape() const -> std::vector<uint32_t> {
     __block std::vector<uint32_t> vectorList;
     vectorList.reserve([((MLCTensorDescriptor*)self).shape count]);
     [((MLCTensorDescriptor*)self).shape enumerateObjectsUsingBlock:^(NSNumber* _Nonnull obj, NSUInteger idx, BOOL* _Nonnull stop) {
@@ -88,7 +90,7 @@ auto CppMLCTensorDescriptor::getShape() -> std::vector<uint32_t> {
     return vectorList;
 }
 
-auto CppMLCTensorDescriptor::getStride() -> std::vector<uint32_t> {
+auto CppMLCTensorDescriptor::getStride() const -> std::vector<uint32_t> {
     __block std::vector<uint32_t> vectorList;
     vectorList.reserve([((MLCTensorDescriptor*)self).stride count]);
     [((MLCTensorDescriptor*)self).stride enumerateObjectsUsingBlock:^(NSNumber* _Nonnull obj, NSUInteger idx, BOOL* _Nonnull stop) {
@@ -97,11 +99,11 @@ auto CppMLCTensorDescriptor::getStride() -> std::vector<uint32_t> {
     return vectorList;
 }
 
-auto CppMLCTensorDescriptor::getTensorAllocationSizeInBytes() -> uint64_t {
+auto CppMLCTensorDescriptor::getTensorAllocationSizeInBytes() const -> uint64_t {
     return (uint64_t)((MLCTensorDescriptor*)self).tensorAllocationSizeInBytes;
 }
 
-auto CppMLCTensorDescriptor::getSequenceLengths() -> std::vector<uint32_t> {
+auto CppMLCTensorDescriptor::getSequenceLengths() const -> std::vector<uint32_t> {
     __block std::vector<uint32_t> vectorList;
     vectorList.reserve([((MLCTensorDescriptor*)self).sequenceLengths count]);
     [((MLCTensorDescriptor*)self).sequenceLengths enumerateObjectsUsingBlock:^(NSNumber* _Nonnull obj, NSUInteger idx, BOOL* _Nonnull stop) {
@@ -110,11 +112,11 @@ auto CppMLCTensorDescriptor::getSequenceLengths() -> std::vector<uint32_t> {
     return vectorList;
 }
 
-bool CppMLCTensorDescriptor::isSortedSequences() {
+bool CppMLCTensorDescriptor::isSortedSequences() const {
     return ((MLCTensorDescriptor*)self).sortedSequences == YES;
 }
 
-auto CppMLCTensorDescriptor::getBatchSizePerSequenceStep() -> std::vector<uint32_t> {
+auto CppMLCTensorDescriptor::getBatchSizePerSequenceStep() const -> std::vector<uint32_t> {
     __block std::vector<uint32_t> vectorList;
     vectorList.reserve([((MLCTensorDescriptor*)self).batchSizePerSequenceStep count]);
     [((MLCTensorDescriptor*)self).batchSizePerSequenceStep enumerateObjectsUsingBlock:^(NSNumber* _Nonnull obj, NSUInteger idx, BOOL* _Nonnull stop) {
@@ -123,7 +125,41 @@ auto CppMLCTensorDescriptor::getBatchSizePerSequenceStep() -> std::vector<uint32
     return vectorList;
 }
 
-auto CppMLCTensorDescriptor::getMaxTensorDimensions() -> uint64_t {
+auto CppMLCTensorDescriptor::getMaxTensorDimensions() const -> uint64_t {
     return (uint64_t)MLCTensorDescriptor.maxTensorDimensions;
 }
 
+std::ostream& operator<<(std::ostream& out, CppMLCTensorDescriptor const& descriptor)
+{
+    out << "CppMLCTensorDescriptor {\n"
+        << "dimensionsCount: " << descriptor.getDimensionsCount() << "\n"
+        << "shape: ";
+    for(auto const& item : descriptor.getShape())
+    {
+        out << item << " ";
+    }
+    out << "\n"
+        << "stride: ";
+    for(auto const& item : descriptor.getStride())
+    {
+        out << item << " ";
+    }
+    out << "\n"
+        << "sequenceLengths: ";
+    for(auto const& item : descriptor.getSequenceLengths())
+    {
+        out << item << " ";
+    }
+    out << "\n"
+        << "tensorAllocationSizeInBytes: " << descriptor.getTensorAllocationSizeInBytes() << "\n"
+        << "isSortedSequences: " << descriptor.isSortedSequences() << "\n"
+        << "batchSizePerSequenceStep: ";
+    for(auto const& item : descriptor.getBatchSizePerSequenceStep())
+    {
+        out << item << " ";
+    }
+    out << "\n"
+        << "maxTensorDimensions: " << descriptor.getMaxTensorDimensions() << "\n"
+        << "dataType: " << (uint32_t)descriptor.getDataType() << "\n}\n";
+    return out;
+}

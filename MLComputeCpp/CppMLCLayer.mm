@@ -1,20 +1,22 @@
-#import "CppMLCLayer.h"
-#import "CppMLCDevice.h"
-#import "CppMLCTypesPrivate.h"
+#include "CppMLCLayer.h"
+#include "CppMLCDevice.h"
+#include "CppMLCTypesPrivate.h"
 
 #import <MLCompute/MLCLayer.h>
 
-auto CppMLCLayer::getLayerID() -> uint64_t
+#include <iostream>
+
+auto CppMLCLayer::getLayerID() const -> uint64_t
 {
     return ((MLCLayer*)self).layerID;
 }
 
-auto CppMLCLayer::getLabel() -> std::string
+auto CppMLCLayer::getLabel() const -> std::string
 {
     return std::string([((MLCLayer*)self).label UTF8String]);
 }
 
-bool CppMLCLayer::isDebuggingEnabled()
+bool CppMLCLayer::isDebuggingEnabled() const
 {
     return ((MLCLayer*)self).isDebuggingEnabled == YES;
 }
@@ -22,7 +24,7 @@ bool CppMLCLayer::isDebuggingEnabled()
 CppMLCLayer::CppMLCLayer(void *self)
     : self{self}
 {
-    [(id)self retain];
+    //[(id)self retain];
 }
 
 CppMLCLayer::~CppMLCLayer()
@@ -38,4 +40,12 @@ bool CppMLCLayer::supportsDataType(eMLCDataType dataType, const CppMLCDevice &de
 auto CppMLCLayer::getSelf() -> void*
 {
     return self;
+}
+
+std::ostream& operator<<(std::ostream& out, CppMLCLayer const& layer)
+{
+    out << "layer: { \n"
+        << "layerId: " << layer.getLayerID() << "\n"
+        << "label: " << layer.getLabel() << "\n}" << std::endl;
+    return out;
 }
